@@ -396,6 +396,37 @@
         }
         
         /* Responsive Design */
+        @media (max-width: 992px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .contact-form,
+            .contact-info {
+                padding: 2rem;
+            }
+            
+            .contact-hero {
+                padding: 100px 0 60px;
+            }
+            
+            /* Make map section row content vertical at medium sizes */
+            .map-section .row {
+                flex-direction: column;
+            }
+            
+            .map-section .col-lg-8,
+            .map-section .col-lg-4 {
+                width: 100%;
+                margin-bottom: 2rem;
+            }
+            
+            .map-section .col-lg-4:last-child {
+                margin-bottom: 0;
+            }
+        }
+        
         @media (max-width: 768px) {
             .contact-grid {
                 grid-template-columns: 1fr;
@@ -748,7 +779,7 @@
                 <div class="footer-social">
                     <a href="https://instagram.com/hanastore" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                     <a href="https://facebook.com/hanastore" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                    <a href="https://twitter.com/hanastore" aria-label="Twitter"><i class="fab fa-x"></i></a>
+                    <a href="https://twitter.com/hanastore" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
                     <a href="https://pinterest.com/hanastore" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
                 </div>
             </div>
