@@ -1094,6 +1094,9 @@ p {
         border-color: rgba(0,0,0,0.12);
         box-shadow: none;
     }
+    .cart-icon:hover::before {
+        opacity: 0;
+    }
     
     .cart-icon i {
         font-size: 1rem;
