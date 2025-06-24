@@ -304,6 +304,15 @@
                 gap: 1rem;
             }
         }
+        
+        /* Ensure vertical layout on medium screens */
+        @media (max-width: 991px) {
+            .product-details-row .col-12 {
+                width: 100% !important;
+                flex: 0 0 100% !important;
+                max-width: 100% !important;
+            }
+        }
     </style>
 </head>
 <body class="product-page">
@@ -367,13 +376,13 @@
             </nav>
 
             <!-- Product Details -->
-            <div class="row align-items-start mb-5">
-                <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="row align-items-start mb-5 product-details-row">
+                <div class="col-12 col-lg-6 mb-4 mb-lg-0">
                     <div class="product-gallery">
                         <img id="product-image" src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Product" class="product-main-img">
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-12 col-lg-6">
                     <div class="product-info-section">
                         <h1 class="product-title" id="product-name">Product Name</h1>
                         <h2 class="product-price" id="product-price">LE 0.00</h2>
