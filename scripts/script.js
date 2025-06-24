@@ -132,6 +132,16 @@ class CartManager {
         
         this.saveCart();
         this.updateCartDisplay();
+        
+        // Trigger cart bounce animation
+        const cartIcon = document.querySelector('.cart-icon');
+        if (cartIcon) {
+            cartIcon.classList.add('bounce');
+            setTimeout(() => {
+                cartIcon.classList.remove('bounce');
+            }, 600);
+        }
+        
         return this.items;
     }
 
@@ -139,6 +149,12 @@ class CartManager {
         this.items = this.items.filter(item => item.id !== id);
         this.saveCart();
         this.updateCartDisplay();
+        
+        // Refresh cart modal if it's open
+        if (document.querySelector('.cart-modal')) {
+            this.showCart();
+        }
+        
         return this.items;
     }
 
@@ -151,6 +167,11 @@ class CartManager {
                 item.quantity = quantity;
                 this.saveCart();
                 this.updateCartDisplay();
+                
+                // Refresh cart modal if it's open
+                if (document.querySelector('.cart-modal')) {
+                    this.showCart();
+                }
             }
         }
         return this.items;
@@ -201,13 +222,23 @@ class CartManager {
         if (this.items.length === 0) {
             Swal.fire({
                 icon: 'info',
-                title: 'Your Cart is Empty',
-                text: 'Add some elegant pieces to your cart to get started.',
-                confirmButtonColor: '#1a1a1a'
+                title: 'Your Cart',
+                html: `
+                    <div class="cart-empty">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h4>Your cart is empty</h4>
+                        <p>Add some items to your cart to get started.</p>
+                    </div>
+                `,
+                confirmButtonText: 'Continue Shopping',
+                confirmButtonColor: '#1a1a1a',
+                customClass: {
+                    container: 'cart-modal'
+                }
             });
             return;
         }
-        
+
         let cartContent = '<div class="cart-items">';
         this.items.forEach(item => {
             cartContent += `
@@ -216,28 +247,41 @@ class CartManager {
                     <div class="cart-item-details">
                         <h6>${item.name}</h6>
                         <p class="cart-item-price">${this.formatPrice(item.price)}</p>
-                        <p class="cart-item-quantity">Quantity: ${item.quantity}</p>
+                        <div class="cart-quantity-controls">
+                            <button class="quantity-btn" onclick="cartManager.updateQuantity('${item.id}', ${item.quantity - 1})" ${item.quantity <= 1 ? 'disabled' : ''}>
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="quantity-display">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="cartManager.updateQuantity('${item.id}', ${item.quantity + 1})">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="cartManager.removeItem('${item.id}')" class="cart-remove-btn">
+                    <button onclick="cartManager.removeItem('${item.id}')" class="cart-remove-btn" title="Remove item">
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
             `;
         });
-        
+        cartContent += '</div>';
         cartContent += `
             <div class="cart-total">
-                <h5>Total: ${this.formatPrice(this.getTotal())}</h5>
+                <h5>${this.formatPrice(this.getTotal())}</h5>
             </div>
             <div class="cart-actions">
-                <button onclick="cartManager.clearCart()" class="btn btn-outline-secondary">Clear Cart</button>
-                <button onclick="cartManager.checkout()" class="btn btn-primary">Checkout</button>
+                <button onclick="cartManager.clearCart(); showCart();" class="btn btn-outline-secondary">
+                    <i class="fas fa-trash-alt me-2"></i>Clear Cart
+                </button>
+                <button onclick="cartManager.checkout()" class="btn btn-primary">
+                    <i class="fas fa-shopping-cart me-2"></i>Checkout
+                </button>
             </div>
-        </div>`;
-        
+        `;
+
         Swal.fire({
             title: 'Your Shopping Cart',
             html: cartContent,
+            showCancelButton: false,
             showConfirmButton: false,
             showCloseButton: true,
             width: '600px',
@@ -261,7 +305,12 @@ class CartManager {
 
         console.log('Redirecting to checkout page...');
         // Redirect to checkout page
-        window.location.href = 'checkout.html';
+        if(window.location.href.includes('index.html')){
+            window.location.href = 'pages/checkout.html'; 
+        }
+        else{
+            window.location.href = 'checkout.html';
+        }
     }
 }
 
@@ -567,38 +616,70 @@ class NotificationManager {
             Swal.fire({
                 icon: 'info',
                 title: 'Your Cart',
-                text: 'Your cart is empty.',
-                confirmButtonText: 'Continue Shopping'
+                html: `
+                    <div class="cart-empty">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h4>Your cart is empty</h4>
+                        <p>Add some items to your cart to get started.</p>
+                    </div>
+                `,
+                confirmButtonText: 'Continue Shopping',
+                confirmButtonColor: '#1a1a1a',
+                customClass: {
+                    container: 'cart-modal'
+                }
             });
             return;
         }
 
-        let cartHTML = '<div class="cart-items">';
+        let cartContent = '<div class="cart-items">';
         cartManager.items.forEach(item => {
-            cartHTML += `
-                <div class="cart-item" style="display: flex; align-items: center; margin-bottom: 1rem; padding: 1rem; border: 1px solid #eee; border-radius: 10px;">
-                    <img src="${item.image}" alt="${item.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin-right: 1rem;">
-                    <div style="flex: 1;">
-                        <h6 style="margin: 0 0 0.5rem 0;">${item.name}</h6>
-                        <p style="margin: 0; color: #666;">${utils.formatPrice(item.price)} x ${item.quantity}</p>
+            cartContent += `
+                <div class="cart-item">
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <h6>${item.name}</h6>
+                        <p class="cart-item-price">${utils.formatPrice(item.price)}</p>
+                        <div class="cart-quantity-controls">
+                            <button class="quantity-btn" onclick="cartManager.updateQuantity('${item.id}', ${item.quantity - 1})" ${item.quantity <= 1 ? 'disabled' : ''}>
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="quantity-display">${item.quantity}</span>
+                            <button class="quantity-btn" onclick="cartManager.updateQuantity('${item.id}', ${item.quantity + 1})">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
-                    <button onclick="cartManager.removeItem('${item.id}'); showCart();" style="background: #ff4444; color: white; border: none; padding: 0.5rem; border-radius: 5px; cursor: pointer;">Remove</button>
+                    <button onclick="cartManager.removeItem('${item.id}')" class="cart-remove-btn" title="Remove item">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </div>
             `;
         });
-        cartHTML += `<div style="text-align: right; margin-top: 1rem; font-weight: bold;">Total: ${utils.formatPrice(cartManager.getTotal())}</div>`;
-        cartHTML += '</div>';
+        cartContent += '</div>';
+        cartContent += `
+            <div class="cart-total">
+                <h5>${utils.formatPrice(cartManager.getTotal())}</h5>
+            </div>
+            <div class="cart-actions">
+                <button onclick="cartManager.clearCart(); showCart();" class="btn btn-outline-secondary">
+                    <i class="fas fa-trash-alt me-2"></i>Clear Cart
+                </button>
+                <button onclick="cartManager.checkout()" class="btn btn-primary">
+                    <i class="fas fa-shopping-cart me-2"></i>Checkout
+                </button>
+            </div>
+        `;
 
         Swal.fire({
-            title: 'Your Cart',
-            html: cartHTML,
-            showCancelButton: true,
-            confirmButtonText: 'Checkout',
-            cancelButtonText: 'Continue Shopping',
-            width: '600px'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                cartManager.checkout();
+            title: 'Your Shopping Cart',
+            html: cartContent,
+            showCancelButton: false,
+            showConfirmButton: false,
+            showCloseButton: true,
+            width: '600px',
+            customClass: {
+                container: 'cart-modal'
             }
         });
     }
