@@ -1,0 +1,12 @@
+[debug] [2025-06-23T17:06:59.119Z] ----------------------------------------------------------------------
+[debug] [2025-06-23T17:06:59.121Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\abdos\AppData\Local\npm-cache\_npx\7750544ccf494d8b\node_modules\firebase-tools\lib\bin\firebase.js login
+[debug] [2025-06-23T17:06:59.122Z] CLI Version:   14.8.0
+[debug] [2025-06-23T17:06:59.122Z] Platform:      win32
+[debug] [2025-06-23T17:06:59.122Z] Node Version:  v24.2.0
+[debug] [2025-06-23T17:06:59.122Z] Time:          Mon Jun 23 2025 20:06:59 GMT+0300 (Eastern European Summer Time)
+[debug] [2025-06-23T17:06:59.122Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-06-23T17:06:59.124Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[info] i  Firebase CLI integrates with Gemini in Firebase API to provide assistant features. Learn more about using Gemini in Firebase and how we train our models: https://firebase.google.com/docs/gemini-in-firebase/set-up-gemini#required-permissions 
+[debug] [2025-06-23T17:06:59.736Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2025-06-23T17:06:59.736Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}

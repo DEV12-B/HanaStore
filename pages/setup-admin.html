@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup First Admin | Hana Store</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../styles/styles.css">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    
+    <style>
+        .setup-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            color: white;
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+        
+        .setup-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .btn-setup {
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+        
+        .btn-setup:hover {
+            background: #333;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .user-select {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .user-select:hover {
+            border-color: #1a1a1a;
+            background: #f8f9fa;
+        }
+        
+        .user-select.selected {
+            border-color: #1a1a1a;
+            background: #1a1a1a;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <span class="brand-text">HANA</span>
+                <span class="brand-subtitle">STORE</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shop.html">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-management.html">Admin Management</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Setup Header -->
+    <section class="setup-header">
+        <div class="container">
+            <h1 class="hero-title">
+                <i class="fas fa-crown me-3"></i>
+                Setup First Admin
+            </h1>
+            <p class="hero-subtitle">
+                Choose the first admin user for your store
+            </p>
+        </div>
+    </section>
+
+    <!-- Setup Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    
+                    <!-- Status Check -->
+                    <div class="setup-card">
+                        <h3 class="mb-4">
+                            <i class="fas fa-info-circle text-primary me-2"></i>
+                            Admin Status Check
+                        </h3>
+                        <div id="status-check">
+                            <div class="alert alert-info">
+                                <i class="fas fa-spinner fa-spin me-2"></i>
+                                Checking if admins already exist...
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Setup Section -->
+                    <div id="setup-section" style="display: none;">
+                        <div class="setup-card">
+                            <h3 class="mb-4">
+                                <i class="fas fa-user-plus text-success me-2"></i>
+                                Select First Admin
+                            </h3>
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <strong>Important:</strong> Choose carefully! This user will have full admin privileges and can manage other users.
+                            </div>
+                            
+                            <div id="users-list">
+                                <p class="text-muted">Loading users...</p>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <button class="btn btn-setup" onclick="confirmAdminSetup()" id="confirm-btn" disabled>
+                                    <i class="fas fa-crown me-2"></i>
+                                    Make Selected User Admin
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Already Setup Section -->
+                    <div id="already-setup" style="display: none;">
+                        <div class="setup-card">
+                            <div class="text-center">
+                                <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                                <h3>Admin Already Exists</h3>
+                                <p class="text-muted">
+                                    An admin user has already been set up. 
+                                    Use the admin management system to manage users.
+                                </p>
+                                <a href="admin-management.html" class="btn btn-setup">
+                                    <i class="fas fa-users-cog me-2"></i>
+                                    Go to Admin Management
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="setup-card">
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <a href="admin-management.html" class="btn btn-outline-dark me-2">
+                                <i class="fas fa-users-cog me-2"></i>
+                                Admin Management
+                            </a>
+                            <a href="add-products.html" class="btn btn-outline-dark me-2">
+                                <i class="fas fa-plus me-2"></i>
+                                Add Products
+                            </a>
+                            <a href="shop.html" class="btn btn-outline-dark">
+                                <i class="fas fa-store me-2"></i>
+                                View Shop
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-row">
+                <div class="footer-brand">
+                    <span class="brand-text">HANA STORE</span>
+                </div>
+                <div class="footer-links">
+                    <a href="../index.html">Home</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://instagram.com/hanastore" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/hanastore" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com/hanastore" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://pinterest.com/hanastore" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom-modern">
+                <p>&copy; 2024 Hana Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="../scripts/script.js"></script>
+    
+    <!-- Setup Admin Script -->
+    <script src="../scripts/setup-first-admin.js"></script>
+    
+    <script>
+        let selectedUserEmail = null;
+
+        // Check admin status on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            const hasAdmin = await checkAdminExists();
+            
+            if (hasAdmin) {
+                document.getElementById('status-check').innerHTML = `
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        Admin user already exists. You can use the admin management system.
+                    </div>
+                `;
+                document.getElementById('already-setup').style.display = 'block';
+            } else {
+                document.getElementById('status-check').innerHTML = `
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        No admin user found. Please set up the first admin.
+                    </div>
+                `;
+                document.getElementById('setup-section').style.display = 'block';
+                loadUsers();
+            }
+        });
+
+        // Load users for selection
+        async function loadUsers() {
+            const users = await getAllUsers();
+            const container = document.getElementById('users-list');
+            
+            if (users.length === 0) {
+                container.innerHTML = `
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        No users found. Please have users sign up first before setting up admin.
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<h5 class="mb-3">Select a user to make admin:</h5>';
+            
+            users.forEach(user => {
+                html += `
+                    <div class="user-select" onclick="selectUser('${user.email}')" data-email="${user.email}">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>${user.email}</strong>
+                                ${user.name ? `<br><small class="text-muted">${user.name}</small>` : ''}
+                            </div>
+                            <div class="text-muted">
+                                <small>Created: ${user.createdAt ? new Date(user.createdAt.toDate()).toLocaleDateString() : 'N/A'}</small>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Select a user
+        function selectUser(email) {
+            selectedUserEmail = email;
+            
+            // Update UI
+            document.querySelectorAll('.user-select').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            document.querySelector(`[data-email="${email}"]`).classList.add('selected');
+            document.getElementById('confirm-btn').disabled = false;
+        }
+
+        // Confirm admin setup
+        async function confirmAdminSetup() {
+            if (!selectedUserEmail) {
+                alert('Please select a user first.');
+                return;
+            }
+
+            if (confirm(`Are you sure you want to make ${selectedUserEmail} an admin?\n\nThis action cannot be undone easily.`)) {
+                await setupFirstAdmin(selectedUserEmail);
+                
+                // Refresh page to show updated status
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html> 

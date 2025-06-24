@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Hana Store - Handmade Accessories for Men & Women</title>
+    <meta name="description" content="Complete your purchase at Hana Store. Secure checkout with multiple payment options and fast shipping.">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../styles/styles.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAbx9j0EnImiqjnOWQnHdaTMMSBrn5Cqho",
+        authDomain: "e-commerce-ffc52.firebaseapp.com",
+        projectId: "e-commerce-ffc52",
+        storageBucket: "e-commerce-ffc52.firebasestorage.app",
+        messagingSenderId: "560697224733",
+        appId: "1:560697224733:web:a72dd774f4c9c355eea0f4",
+        measurementId: "G-SVDW71Z94G"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    <style>
+        .checkout-page {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .checkout-section {
+            background: #fff;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .checkout-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+        }
+        
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            border-radius: 2px;
+        }
+        
+        .section-title i {
+            color: #1a1a1a;
+            font-size: 1.5rem;
+        }
+        
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            color: #1a1a1a;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #1a1a1a;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(26, 26, 26, 0.1);
+            outline: none;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .payment-method {
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 1.75rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .payment-method::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(26, 26, 26, 0.05), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .payment-method:hover::before {
+            left: 100%;
+        }
+        
+        .payment-method:hover {
+            border-color: #1a1a1a;
+            background: #fff;
+            transform: translateY(-2px);
+        }
+        
+        .payment-method.selected {
+            border-color: #1a1a1a;
+            background: #fff;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+        
+        .payment-method input[type="radio"] {
+            margin-right: 1rem;
+            transform: scale(1.2);
+        }
+        
+        .payment-method label {
+            font-weight: 500;
+            color: #1a1a1a;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
+        
+        .shipping-option {
+            display: flex;
+            align-items: center;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 1.75rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shipping-option input[type="radio"] {
+            margin-right: 1rem;
+            margin-top: 0;
+            align-self: center;
+        }
+        
+        .shipping-option label {
+            flex: 1;
+            margin: 0;
+            display: block;
+        }
+        
+        .shipping-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .shipping-name {
+            font-weight: 600;
+            color: #1a1a1a;
+            font-size: 1.1rem;
+        }
+        
+        .shipping-price {
+            margin-left: auto;
+            font-weight: 600;
+            color: #1a1a1a;
+            font-size: 1.1rem;
+            white-space: nowrap;
+        }
+        
+        .shipping-time {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+        
+        .order-summary {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            position: sticky;
+            top: 2rem;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .order-item:hover {
+            background: rgba(26, 26, 26, 0.02);
+            border-radius: 10px;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        
+        .order-item-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .order-item:hover .order-item-img {
+            transform: scale(1.05);
+        }
+        
+        .order-item-details {
+            flex: 1;
+        }
+        
+        .order-item-name {
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .order-item-quantity {
+            color: #666;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 0.25rem;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            font-weight: 400;
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .summary-row.total {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #1a1a1a;
+            border-top: 2px solid #e9ecef;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+        }
+        
+        .place-order-btn {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            color: #fff;
+            border: none;
+            padding: 1.5rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .place-order-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .place-order-btn:hover::before {
+            left: 100%;
+        }
+        
+        .place-order-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        
+        .place-order-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .empty-cart-message {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #666;
+            font-style: italic;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px dashed #e9ecef;
+        }
+        
+        .form-row {
+            margin-bottom: 1.5rem;
+        }
+        
+        .required-field::after {
+            content: ' *';
+            color: #dc3545;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .checkout-section {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .order-summary {
+                position: static;
+                margin-top: 2rem;
+                padding: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .form-control, .form-select {
+                padding: 1rem 1.25rem;
+            }
+            
+            .shipping-option, .payment-method {
+                padding: 1.25rem;
+            }
+            
+            .place-order-btn {
+                padding: 1.25rem 1.5rem;
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Animation for page load */
+        .checkout-section {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        .order-summary {
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="checkout-page">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <span class="brand-text">HANA</span>
+                <span class="brand-subtitle">STORE</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shop.html">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="authDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user me-1"></i>Account
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="authDropdown">
+                            <li><a class="dropdown-item" href="login.html">
+                                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                            </a></li>
+                            <li><a class="dropdown-item" href="login.html#signup">
+                                <i class="fas fa-user-plus me-2"></i>Sign Up
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cart-icon" href="#" onclick="showCart()">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 120px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Shipping Address -->
+                    <div class="checkout-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Shipping Address
+                        </h2>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName" class="form-label required-field">First Name</label>
+                                <input type="text" class="form-control" id="firstName" required placeholder="Enter your first name">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName" class="form-label required-field">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" required placeholder="Enter your last name">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label required-field">Email Address</label>
+                            <input type="email" class="form-control" id="email" required placeholder="Enter your email address">
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label required-field">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" required placeholder="Enter your phone number">
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label required-field">Street Address</label>
+                            <input type="text" class="form-control" id="address" required placeholder="Enter your street address">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="city" class="form-label required-field">City</label>
+                                <select class="form-select" id="city" required>
+                                    <option value="">Select your city</option>
+                                    <option value="Cairo">Cairo</option>
+                                    <option value="Alexandria">Alexandria</option>
+                                    <option value="Giza">Giza</option>
+                                    <option value="Mansoura">Mansoura</option>
+                                    <option value="Tanta">Tanta</option>
+                                    <option value="Aswan">Aswan</option>
+                                    <option value="Luxor">Luxor</option>
+                                    <option value="Zagazig">Zagazig</option>
+                                    <option value="Ismailia">Ismailia</option>
+                                    <option value="Fayoum">Fayoum</option>
+                                    <option value="Suez">Suez</option>
+                                    <option value="Port Said">Port Said</option>
+                                    <option value="Damanhur">Damanhur</option>
+                                    <option value="Minya">Minya</option>
+                                    <option value="Sohag">Sohag</option>
+                                    <option value="Assiut">Assiut</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Method -->
+                    <div class="checkout-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-shipping-fast"></i>
+                            Shipping Method
+                        </h2>
+                        <div class="shipping-option" onclick="selectShipping('standard')">
+                            <input type="radio" name="shipping" id="standard" value="standard" checked>
+                            <label for="standard">
+                                <div class="shipping-details">
+                                    <div>
+                                        <div class="shipping-name">Standard Shipping</div>
+                                        <div class="shipping-time">5-7 business days</div>
+                                    </div>
+                                    <div class="shipping-price">LE 50.00</div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="shipping-option" id="sohag-pickup" style="display: none;" onclick="selectShipping('sohag-pickup')">
+                            <input type="radio" name="shipping" id="sohag-pickup-radio" value="sohag-pickup">
+                            <label for="sohag-pickup-radio">
+                                <div class="shipping-details">
+                                    <div>
+                                        <div class="shipping-name">Drop at Sohag</div>
+                                        <div class="shipping-time">Pick up from our Sohag location</div>
+                                    </div>
+                                    <div class="shipping-price">LE 0.00</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="checkout-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-credit-card"></i>
+                            Payment Method
+                        </h2>
+                        <div class="payment-method" onclick="selectPayment('cash')">
+                            <input type="radio" name="payment" id="cash" value="cash" checked>
+                            <label for="cash">
+                                <i class="fas fa-money-bill-wave me-2"></i>
+                                Cash on Delivery
+                            </label>
+                        </div>
+                        <div class="payment-method" onclick="selectPayment('card')">
+                            <input type="radio" name="payment" id="card" value="card">
+                            <label for="card">
+                                <i class="fas fa-credit-card me-2"></i>
+                                Credit/Debit Card
+                            </label>
+                        </div>
+                        <div class="payment-method" onclick="selectPayment('bank')">
+                            <input type="radio" name="payment" id="bank" value="bank">
+                            <label for="bank">
+                                <i class="fas fa-university me-2"></i>
+                                Bank Transfer
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="col-lg-4">
+                    <div class="order-summary">
+                        <h3 class="section-title">Order Summary</h3>
+                        <div id="order-items">
+                            <!-- Order items will be loaded here -->
+                        </div>
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">LE 0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping:</span>
+                            <span id="shipping-cost">LE 50.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="total">LE 0.00</span>
+                        </div>
+                        <button class="place-order-btn" onclick="placeOrder()" id="place-order-btn">
+                            <i class="fas fa-lock me-2"></i>
+                            Place Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-row">
+                <div class="footer-brand">
+                    <span class="brand-text">HANA STORE</span>
+                </div>
+                <div class="footer-links">
+                    <a href="../index.html">Home</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://instagram.com/hanastore" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/hanastore" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com/hanastore" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://pinterest.com/hanastore" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom-modern">
+                <p>&copy; 2024 Hana Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../scripts/script.js"></script>
+    <script>
+        let cart = [];
+        let selectedShipping = 'standard';
+        let selectedPayment = 'cash';
+        let shippingCosts = {
+            standard: 50.00,
+            'sohag-pickup': 0.00
+        };
+
+        // Load cart from localStorage
+        function loadCart() {
+            const savedCart = localStorage.getItem('cart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+            }
+            updateOrderSummary();
+        }
+
+        // Check city and show/hide Sohag pickup option
+        function checkCityForShipping() {
+            const citySelect = document.getElementById('city');
+            const sohagPickupOption = document.getElementById('sohag-pickup');
+            
+            if (citySelect.value === 'Sohag') {
+                sohagPickupOption.style.display = 'block';
+                // If Sohag is selected and no shipping method is selected, default to Sohag pickup
+                if (!document.querySelector('input[name="shipping"]:checked')) {
+                    selectShipping('sohag-pickup');
+                }
+            } else {
+                sohagPickupOption.style.display = 'none';
+                // If Sohag pickup was selected but city changed, switch to standard
+                if (selectedShipping === 'sohag-pickup') {
+                    selectShipping('standard');
+                }
+            }
+        }
+
+        // Update order summary
+        function updateOrderSummary() {
+            const orderItemsContainer = document.getElementById('order-items');
+            const subtotalElement = document.getElementById('subtotal');
+            const shippingElement = document.getElementById('shipping-cost');
+            const totalElement = document.getElementById('total');
+
+            // Clear existing items
+            orderItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                orderItemsContainer.innerHTML = '<div class="empty-cart-message"><i class="fas fa-shopping-bag fa-2x mb-3"></i><p>No items in cart</p></div>';
+                subtotalElement.textContent = 'LE 0.00';
+                shippingElement.textContent = 'LE 0.00';
+                totalElement.textContent = 'LE 0.00';
+                return;
+            }
+
+            // Group items by name and count quantities
+            const groupedItems = {};
+            cart.forEach(item => {
+                if (groupedItems[item.name]) {
+                    groupedItems[item.name].quantity += 1;
+                } else {
+                    groupedItems[item.name] = {
+                        ...item,
+                        quantity: 1
+                    };
+                }
+            });
+
+            // Display grouped items
+            Object.values(groupedItems).forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'order-item';
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="order-item-img">
+                    <div class="order-item-details">
+                        <div class="order-item-name">${item.name}</div>
+                        <div class="order-item-quantity">Qty: ${item.quantity}</div>
+                    </div>
+                    <div class="order-item-price">LE ${(item.price * item.quantity).toFixed(2)}</div>
+                `;
+                orderItemsContainer.appendChild(itemElement);
+            });
+
+            // Calculate totals
+            const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+            const shipping = shippingCosts[selectedShipping];
+            const total = subtotal + shipping;
+
+            subtotalElement.textContent = `LE ${subtotal.toFixed(2)}`;
+            shippingElement.textContent = `LE ${shipping.toFixed(2)}`;
+            totalElement.textContent = `LE ${total.toFixed(2)}`;
+        }
+
+        // Select shipping method
+        function selectShipping(method) {
+            selectedShipping = method;
+            
+            // Update radio button
+            document.getElementById(method).checked = true;
+            
+            // Update visual selection
+            document.querySelectorAll('.shipping-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            updateOrderSummary();
+        }
+
+        // Select payment method
+        function selectPayment(method) {
+            selectedPayment = method;
+            
+            // Update radio button
+            document.getElementById(method).checked = true;
+            
+            // Update visual selection
+            document.querySelectorAll('.payment-method').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+        }
+
+        // Place order
+        async function placeOrder() {
+            // Check if user is authenticated
+            const user = firebase.auth().currentUser;
+            if (!user) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Authentication Required',
+                    text: 'Please sign in to place an order.',
+                    confirmButtonText: 'Sign In',
+                    showCancelButton: true,
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'login.html';
+                    }
+                });
+                return;
+            }
+
+            // Validate form
+            if (!validateForm()) {
+                return;
+            }
+
+            // Check if cart is empty
+            if (cart.length === 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Empty Cart',
+                    text: 'Your cart is empty. Please add items before placing an order.'
+                });
+                return;
+            }
+
+            try {
+                // Disable button and show loading
+                const button = document.getElementById('place-order-btn');
+                button.disabled = true;
+                button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+
+                // Collect form data
+                const orderData = {
+                    userId: user.uid,
+                    userEmail: user.email,
+                    customerInfo: {
+                        firstName: document.getElementById('firstName').value,
+                        lastName: document.getElementById('lastName').value,
+                        email: document.getElementById('email').value,
+                        phone: document.getElementById('phone').value,
+                        address: document.getElementById('address').value,
+                        city: document.getElementById('city').value
+                    },
+                    items: cart,
+                    shipping: {
+                        method: selectedShipping,
+                        cost: shippingCosts[selectedShipping]
+                    },
+                    payment: {
+                        method: selectedPayment
+                    },
+                    totals: {
+                        subtotal: cart.reduce((sum, item) => sum + item.price, 0),
+                        shipping: shippingCosts[selectedShipping],
+                        total: cart.reduce((sum, item) => sum + item.price, 0) + shippingCosts[selectedShipping]
+                    },
+                    status: 'pending',
+                    orderDate: new Date(),
+                    orderNumber: generateOrderNumber()
+                };
+
+                // Save order to Firestore
+                const db = firebase.firestore();
+                const orderRef = await db.collection('orders').add(orderData);
+
+                // Clear cart
+                localStorage.removeItem('cart');
+                cart = [];
+
+                // Show success message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Order Placed Successfully!',
+                    text: `Your order #${orderData.orderNumber} has been placed. We'll send you a confirmation email shortly.`,
+                    confirmButtonText: 'View Order',
+                    showCancelButton: true,
+                    cancelButtonText: 'Continue Shopping'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = `order-details.html?id=${orderRef.id}`;
+                    } else {
+                        window.location.href = 'shop.html';
+                    }
+                });
+
+            } catch (error) {
+                console.error('Error placing order:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Order Failed',
+                    text: 'There was an error placing your order. Please try again.'
+                });
+
+                // Re-enable button
+                const button = document.getElementById('place-order-btn');
+                button.disabled = false;
+                button.innerHTML = '<i class="fas fa-lock me-2"></i>Place Order';
+            }
+        }
+
+        // Validate form
+        function validateForm() {
+            const requiredFields = [
+                'firstName', 'lastName', 'email', 'phone', 
+                'address', 'city'
+            ];
+
+            for (const fieldId of requiredFields) {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Missing Information',
+                        text: `Please fill in your ${fieldId.replace(/([A-Z])/g, ' $1').toLowerCase()}.`
+                    });
+                    field.focus();
+                    return false;
+                }
+            }
+
+            // Validate email
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Email',
+                    text: 'Please enter a valid email address.'
+                });
+                document.getElementById('email').focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        // Generate order number
+        function generateOrderNumber() {
+            const timestamp = Date.now().toString();
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            return `HANA${timestamp.slice(-6)}${random}`;
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+            
+            // Add event listener to city dropdown
+            const citySelect = document.getElementById('city');
+            citySelect.addEventListener('change', checkCityForShipping);
+            
+            // Pre-fill email if user is logged in
+            const user = firebase.auth().currentUser;
+            if (user && user.email) {
+                document.getElementById('email').value = user.email;
+            }
+        });
+    </script>
+</body>
+</html> 

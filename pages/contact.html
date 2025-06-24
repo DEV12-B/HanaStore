@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Contact Us - Hana Store | Handmade Accessories for Men & Women</title>
+    <meta name="description" content="Contact Hana Store, your online destination for handmade accessories for men and women. Reach out for support, inquiries, or feedback about our unique, handcrafted jewelry and accessories.">
+    <meta name="keywords" content="contact hana store, handmade accessories, men accessories, women accessories, jewelry, customer service, online shop">
+    <meta name="author" content="Hana Store">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Contact Us - Hana Store | Handmade Accessories for Men & Women">
+    <meta property="og:description" content="Contact Hana Store for support, inquiries, or feedback about our handmade accessories for men and women. Our team is here to help you with any questions about our unique, handcrafted products.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hanastore.com/contact.html">
+    <meta property="og:image" content="https://hanastore.com/contact-image.jpg">
+    <meta property="og:site_name" content="Hana Store">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contact Us - Hana Store | Handmade Accessories for Men & Women">
+    <meta name="twitter:description" content="Contact Hana Store for support, inquiries, or feedback about our handmade accessories for men and women. Our team is here to help you with any questions about our unique, handcrafted products.">
+    <meta name="twitter:image" content="https://hanastore.com/contact-image.jpg">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Hana Store">
+    <meta name="msapplication-TileColor" content="#1a1a1a">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700&display=swap"></noscript>
+    
+    <!-- Preload CSS -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></noscript>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    
+    <!-- Critical CSS -->
+    <link rel="stylesheet" href="../styles/styles.css">
+    
+    <!-- DNS Prefetch for External Resources -->
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//images.unsplash.com">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "name": "Contact Hana Store",
+        "description": "Get in touch with Hana Store for customer support, inquiries, or feedback about our handmade accessories for men and women.",
+        "url": "https://hanastore.com/contact.html",
+        "mainEntity": {
+            "@type": "Organization",
+            "name": "Hana Store",
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "contactType": "customer service",
+                "email": "hello@hanastore.com",
+                "telephone": "+1-555-123-4567",
+                "availableLanguage": "English"
+            },
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "123 Elegance Street",
+                "addressLocality": "New York",
+                "addressRegion": "NY",
+                "postalCode": "10001",
+                "addressCountry": "US"
+            }
+        }
+    }
+    </script>
+    
+    <!-- Firebase SDKs (Compat for HTML) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAbx9j0EnImiqjnOWQnHdaTMMSBrn5Cqho",
+        authDomain: "e-commerce-ffc52.firebaseapp.com",
+        projectId: "e-commerce-ffc52",
+        storageBucket: "e-commerce-ffc52.firebasestorage.app",
+        messagingSenderId: "560697224733",
+        appId: "1:560697224733:web:a72dd774f4c9c355eea0f4",
+        measurementId: "G-SVDW71Z94G"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    
+    <style>
+        /* Contact Page Specific Styles */
+        .contact-hero {
+            background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23000" opacity="0.02"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+        
+        .contact-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .contact-hero-title {
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            font-weight: 200;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+        
+        .contact-hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            font-weight: 300;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+        
+        .contact-section {
+            padding: 100px 0;
+            background: var(--white);
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+        
+        .contact-form {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: var(--border-radius-large);
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-color);
+        }
+        
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        
+        .form-label {
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--text-primary);
+            background: var(--white);
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--text-primary);
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+        }
+        
+        .form-control::placeholder {
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+        
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .contact-info {
+            background: var(--accent-color);
+            padding: 3rem;
+            border-radius: var(--border-radius-large);
+            box-shadow: var(--shadow-light);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow-light);
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .contact-details h5 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .contact-details p {
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .contact-details a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .contact-details a:hover {
+            color: var(--text-primary);
+        }
+        
+        .faq-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+        
+        .faq-item {
+            background: var(--white);
+            border-radius: var(--border-radius-large);
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-light);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item:hover {
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .faq-question {
+            padding: 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--white);
+            border: none;
+            width: 100%;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: var(--accent-color);
+        }
+        
+        .faq-question h4 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .faq-icon {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-question.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            padding: 0 2rem 2rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
+            display: none;
+        }
+        
+        .faq-answer.active {
+            display: block;
+        }
+        
+        .map-section {
+            padding: 100px 0;
+            background: var(--white);
+        }
+        
+        .map-container {
+            border-radius: var(--border-radius-large);
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            height: 400px;
+            background: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+        
+        .map-placeholder {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .map-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+        
+        .business-hours {
+            background: var(--accent-color);
+            padding: 2rem;
+            border-radius: var(--border-radius-large);
+            margin-top: 2rem;
+        }
+        
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .hours-item:last-child {
+            border-bottom: none;
+        }
+        
+        .hours-day {
+            font-weight: 400;
+            color: var(--text-primary);
+        }
+        
+        .hours-time {
+            font-weight: 300;
+            color: var(--text-secondary);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .contact-form,
+            .contact-info {
+                padding: 2rem;
+            }
+            
+            .contact-hero {
+                padding: 100px 0 60px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .faq-question {
+                padding: 1.5rem;
+            }
+            
+            .faq-answer {
+                padding: 0 1.5rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="brand-text">HANA</span>
+                <span class="brand-subtitle">STORE</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shop.html">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="contact.html" aria-current="page">Contact</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="authDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user me-1"></i>Account
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="authDropdown">
+                            <li><a class="dropdown-item" href="login.html">
+                                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                            </a></li>
+                            <li><a class="dropdown-item" href="login.html#signup">
+                                <i class="fas fa-user-plus me-2"></i>Sign Up
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cart-icon" href="#" onclick="showCart()">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Hero Section -->
+    <section class="contact-hero">
+        <div class="container">
+            <div class="contact-hero-content">
+                <h1 class="contact-hero-title">Get in Touch with Hana Store</h1>
+                <p class="contact-hero-subtitle">
+                    We're here to help! Whether you have a question about our handmade accessories for men and women, need assistance with your order, or just want to say hello, we'd love to hear from you. Our team is dedicated to making your experience with our handcrafted products exceptional.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <h3 class="section-title">Send us a Message</h3>
+                    <p class="section-subtitle">We're passionate about handmade accessories. Let us know how we can help you!</p>
+                    
+                    <form id="contactForm" novalidate>
+                        <div class="form-group">
+                            <label for="name" class="form-label">Full Name *</label>
+                            <input type="text" class="form-control" id="name" name="name" required placeholder="Enter your full name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address *</label>
+                            <input type="email" class="form-control" id="email" name="email" required placeholder="Enter your email address">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject" class="form-label">Subject *</label>
+                            <select class="form-control" id="subject" name="subject" required>
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="product">Product Question</option>
+                                <option value="order">Online Order Support</option>
+                                <option value="return">Returns & Exchanges</option>
+                                <option value="shipping">Shipping Information</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" class="form-label">Message *</label>
+                            <textarea class="form-control" id="message" name="message" required placeholder="Tell us how we can help you..."></textarea>
+                        </div>
+                        
+                        <div class="text-center mt-5">
+                        <button type="submit" class="hero-btn w-100">
+                            <i class="fas fa-paper-plane me-2" aria-hidden="true"></i>
+                            Send Message
+                        </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Contact Information -->
+                <div class="contact-info">
+                    <h3 class="section-title">Contact Information</h3>
+                    <p class="section-subtitle">Reach out to our team for anything related to our handmade accessories for men and women</p>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h5>Email Us</h5>
+                            <p><a href="mailto:hello@hanastore.com">hello@hanastore.com</a></p>
+                            <p><a href="mailto:support@hanastore.com">support@hanastore.com</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h5>Call Us</h5>
+                            <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+                            <p>Monday - Friday: 9AM - 6PM EST</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h5>Shop Online 24/7</h5>
+                            <p>Discover our handmade accessories for men and women anytime<br>hanastore.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h5>Customer Service Hours</h5>
+                            <p>Monday - Friday: 9AM - 6PM<br>Saturday: 10AM - 4PM<br>Sunday: Online orders only</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h5>Live Chat</h5>
+                            <p>Available during business hours<br>Look for the chat icon in the bottom right</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-subtitle">Find answers about our handmade accessories and services</p>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>What is your return policy for online orders?</h4>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>We offer a 30-day return policy for all unused items in their original packaging from online orders. Returns are free for customers in the United States. International customers are responsible for return shipping costs. Please contact our customer service team to initiate a return.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>How long does shipping take for online orders?</h4>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Standard shipping within the United States takes 3-5 business days. Express shipping (1-2 business days) is available for an additional fee. International shipping typically takes 7-14 business days depending on the destination country.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>Do you offer international shipping for online orders?</h4>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, we ship to most countries worldwide. International shipping rates and delivery times vary by location. You can see the exact shipping cost and estimated delivery time during checkout by entering your shipping address.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>Are your accessories really handmade?</h4>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes! Every accessory at Hana Store is carefully handmade by skilled artisans. We take pride in offering unique, handcrafted pieces for both men and women.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>Do you offer accessories for men?</h4>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Absolutely! Our collection includes a wide range of handmade accessories designed for men, women, and everyone who appreciates unique craftsmanship.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFAQ(this)">
+                            <h4>Do you offer gift wrapping for online orders?</h4>
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, we offer beautiful gift wrapping for all online orders at no additional cost. You can also add a personalized gift message during checkout. Our gift boxes are made from recycled materials and are perfect for special occasions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section">
+        <div class="container">
+            <h2 class="section-title">Shop Handmade Accessories Online 24/7</h2>
+            <p class="section-subtitle">Our unique, handcrafted collection for men and women is available online anytime</p>
+            
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="map-container">
+                        <div class="map-placeholder">
+                            <i class="fas fa-globe"></i>
+                            <h4>Online Store</h4>
+                            <p>Shop our handmade accessories collection 24/7</p>
+                            <p>hanastore.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="business-hours">
+                        <h4>Customer Service Hours</h4>
+                        <div class="hours-item">
+                            <span class="hours-day">Monday</span>
+                            <span class="hours-time">9:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Tuesday</span>
+                            <span class="hours-time">9:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Wednesday</span>
+                            <span class="hours-time">9:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Thursday</span>
+                            <span class="hours-time">9:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Friday</span>
+                            <span class="hours-time">9:00 AM - 6:00 PM</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Saturday</span>
+                            <span class="hours-time">10:00 AM - 4:00 PM</span>
+                        </div>
+                        <div class="hours-item">
+                            <span class="hours-day">Sunday</span>
+                            <span class="hours-time">Online orders only</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-row">
+                <div class="footer-brand">
+                    <span class="brand-text">HANA STORE</span>
+                </div>
+                <div class="footer-links">
+                    <a href="../index.html">Home</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://instagram.com/hanastore" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/hanastore" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com/hanastore" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://pinterest.com/hanastore" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom-modern">
+                <p>&copy; 2024 Hana Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Preload JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="../scripts/script.js" defer></script>
+    
+    <!-- Contact Page JavaScript -->
+    <script>
+        // FAQ Toggle Function
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.faq-icon');
+            
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-question').forEach(item => {
+                if (item !== element) {
+                    item.classList.remove('active');
+                    item.nextElementSibling.classList.remove('active');
+                }
+            });
+            
+            // Toggle current FAQ item
+            element.classList.toggle('active');
+            answer.classList.toggle('active');
+        }
+        
+        // Contact Form Handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const contactForm = document.getElementById('contactForm');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = new FormData(contactForm);
+                    const data = Object.fromEntries(formData);
+                    
+                    // Basic validation
+                    if (!data.name || !data.email || !data.subject || !data.message) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Missing Information',
+                            text: 'Please fill in all required fields.',
+                            confirmButtonColor: '#1a1a1a'
+                        });
+                        return;
+                    }
+                    
+                    // Email validation
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(data.email)) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Invalid Email',
+                            text: 'Please enter a valid email address.',
+                            confirmButtonColor: '#1a1a1a'
+                        });
+                        return;
+                    }
+                    
+                    // Simulate form submission
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Message Sent!',
+                        text: 'Thank you for contacting us. We\'ll get back to you within 24 hours.',
+                        confirmButtonColor: '#1a1a1a',
+                        showConfirmButton: true
+                    }).then(() => {
+                        contactForm.reset();
+                    });
+                });
+            }
+            
+            // Map click handler
+            const mapContainer = document.querySelector('.map-container');
+            if (mapContainer) {
+                mapContainer.addEventListener('click', function() {
+                    window.open('https://hanastore.com', '_blank');
+                });
+            }
+        });
+    </script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html> 

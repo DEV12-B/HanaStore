@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Sample Products | Hana Store Admin</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../styles/styles.css">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    
+    <style>
+        .admin-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            color: white;
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+        
+        .admin-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .btn-admin {
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+        
+        .btn-admin:hover {
+            background: #333;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger-admin {
+            background: #dc3545;
+        }
+        
+        .btn-danger-admin:hover {
+            background: #c82333;
+        }
+        
+        .product-preview {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .product-preview img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <span class="brand-text">HANA</span>
+                <span class="brand-subtitle">STORE</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shop.html">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin.html">Admin</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Header -->
+    <section class="admin-header">
+        <div class="container">
+            <h1 class="hero-title">Add Sample Products</h1>
+            <p class="hero-subtitle">
+                Quickly populate your store with beautiful handmade accessories
+            </p>
+        </div>
+    </section>
+
+    <!-- Admin Content -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="admin-card">
+                        <h3 class="mb-4">
+                            <i class="fas fa-plus-circle text-primary me-2"></i>
+                            Add New Product
+                        </h3>
+                        
+                        <!-- Authentication Status -->
+                        <div id="auth-status" class="mb-3">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                Checking authentication status...
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Add a new product to your store. Fill in all the required information below.
+                        </div>
+                        
+                        <!-- Product Form -->
+                        <form id="product-form" class="admin-only">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="product-name" class="form-label">Product Name *</label>
+                                        <input type="text" class="form-control" id="product-name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="product-price" class="form-label">Price (LE) *</label>
+                                        <input type="number" class="form-control" id="product-price" min="0" step="0.01" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="product-category" class="form-label">Category *</label>
+                                        <select class="form-control" id="product-category" required>
+                                            <option value="">Select Category</option>
+                                            <option value="bracelets">Bracelets</option>
+                                            <option value="necklaces">Necklaces</option>
+                                            <option value="phone-chains">Phone Chains</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="product-material" class="form-label">Material</label>
+                                        <input type="text" class="form-control" id="product-material" placeholder="e.g., Sterling Silver, Gold, Leather">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="product-dimensions" class="form-label">Dimensions</label>
+                                        <input type="text" class="form-control" id="product-dimensions" placeholder="e.g., 18 inches, 40mm case">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="product-stock" class="form-label">Stock Status</label>
+                                        <select class="form-control" id="product-stock">
+                                            <option value="true">In Stock</option>
+                                            <option value="false">Out of Stock</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="product-description" class="form-label">Description *</label>
+                                <textarea class="form-control" id="product-description" rows="4" required placeholder="Describe your product in detail..."></textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="product-image" class="form-label">Product Image URL *</label>
+                                <input type="url" class="form-control" id="product-image" required placeholder="https://example.com/image.jpg">
+                                <div class="form-text">Enter a direct link to the product image</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="product-tags" class="form-label">Tags</label>
+                                <input type="text" class="form-control" id="product-tags" placeholder="handmade, vintage, bohemian (separate with commas)">
+                                <div class="form-text">Add tags to help customers find your product</div>
+                            </div>
+                            
+                            <div class="d-flex flex-wrap justify-content-center">
+                                <button type="submit" class="btn btn-admin">
+                                    <i class="fas fa-plus me-2"></i>
+                                    Add Product
+                                </button>
+                                
+                                <button type="button" class="btn btn-outline-secondary ms-2" onclick="clearForm()">
+                                    <i class="fas fa-eraser me-2"></i>
+                                    Clear Form
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div class="mt-4">
+                            <a href="shop.html" class="btn btn-outline-dark">
+                                <i class="fas fa-eye me-2"></i>
+                                View Shop
+                            </a>
+                            
+                            <a href="admin.html" class="btn btn-outline-dark ms-2">
+                                <i class="fas fa-tachometer-alt me-2"></i>
+                                Admin Dashboard
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Management -->
+                    <div class="admin-card admin-only">
+                        <h4 class="mb-3">Product Management</h4>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <button class="btn btn-danger-admin" onclick="adminDashboard.clearAllProducts()">
+                                <i class="fas fa-trash me-2"></i>
+                                Clear All Products
+                            </button>
+                            
+                            <button class="btn btn-outline-warning ms-2" onclick="adminDashboard.addSampleData()">
+                                <i class="fas fa-database me-2"></i>
+                                Add Sample Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-row">
+                <div class="footer-brand">
+                    <span class="brand-text">HANA STORE</span>
+                </div>
+                <div class="footer-links">
+                    <a href="../index.html">Home</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://instagram.com/hanastore" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/hanastore" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com/hanastore" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://pinterest.com/hanastore" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom-modern">
+                <p>&copy; 2024 Hana Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="../scripts/script.js"></script>
+    
+    <!-- Admin Dashboard Script -->
+    <script src="../scripts/admin-dashboard.js"></script>
+    
+    <script>
+        // Check authentication status
+        function checkAuthStatus() {
+            if (typeof firebase !== 'undefined' && firebase.auth) {
+                firebase.auth().onAuthStateChanged(function(user) {
+                    const form = document.getElementById('product-form');
+                    const managementSection = document.querySelector('.admin-only');
+                    
+                    if (user) {
+                        // User is authenticated
+                        if (form) form.style.display = 'block';
+                        if (managementSection) managementSection.style.display = 'block';
+                        
+                        // Update UI to show user is logged in
+                        const authStatus = document.getElementById('auth-status');
+                        if (authStatus) {
+                            authStatus.innerHTML = `
+                                <div class="alert alert-success">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    Authenticated as: ${user.email || user.displayName || 'User'}
+                                </div>
+                            `;
+                        }
+                    } else {
+                        // User is not authenticated
+                        if (form) form.style.display = 'none';
+                        if (managementSection) managementSection.style.display = 'none';
+                        
+                        // Update UI to show login required
+                        const authStatus = document.getElementById('auth-status');
+                        if (authStatus) {
+                            authStatus.innerHTML = `
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    Authentication required to manage products. 
+                                    <a href="login.html" class="alert-link">Sign in here</a>
+                                </div>
+                            `;
+                        }
+                    }
+                });
+            }
+        }
+
+        // Add new product function
+        async function addNewProduct(productData) {
+            try {
+                if (typeof firebase === 'undefined') {
+                    alert('Firebase is not loaded. Please refresh the page and try again.');
+                    return;
+                }
+                
+                // Check if user is authenticated
+                const user = firebase.auth().currentUser;
+                if (!user) {
+                    alert('Please sign in first to add products.');
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                // Use the db instance from script.js if available, otherwise initialize
+                let firestoreDb;
+                if (typeof db !== 'undefined' && db) {
+                    firestoreDb = db;
+                } else {
+                    // Fallback: initialize Firebase if not already done
+                    if (!firebase.apps.length) {
+                        const firebaseConfig = {
+                            apiKey: "AIzaSyAbx9j0EnImiqjnOWQnHdaTMMSBrn5Cqho",
+                            authDomain: "e-commerce-ffc52.firebaseapp.com",
+                            projectId: "e-commerce-ffc52",
+                            storageBucket: "e-commerce-ffc52.firebasestorage.app",
+                            messagingSenderId: "560697224733",
+                            appId: "1:560697224733:web:a72dd774f4c9c355eea0f4",
+                            measurementId: "G-SVDW71Z94G"
+                        };
+                        firebase.initializeApp(firebaseConfig);
+                    }
+                    firestoreDb = firebase.firestore();
+                }
+                
+                // Add the product to Firestore
+                await firestoreDb.collection('products').add({
+                    ...productData,
+                    createdBy: user.uid,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                
+                console.log('Product added successfully!');
+                alert('Product added successfully!');
+                clearForm();
+                
+            } catch (error) {
+                console.error('Error adding product:', error);
+                if (error.code === 'permission-denied') {
+                    alert('Permission denied. Please make sure you are signed in and have the right permissions.');
+                } else {
+                    alert('Error adding product. Please check the console for details.');
+                }
+            }
+        }
+
+        // Clear form function
+        function clearForm() {
+            document.getElementById('product-form').reset();
+        }
+
+        // Handle form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('product-form');
+            if (form) {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = {
+                        name: document.getElementById('product-name').value.trim(),
+                        price: parseFloat(document.getElementById('product-price').value),
+                        category: document.getElementById('product-category').value,
+                        description: document.getElementById('product-description').value.trim(),
+                        image: document.getElementById('product-image').value.trim(),
+                        material: document.getElementById('product-material').value.trim(),
+                        dimensions: document.getElementById('product-dimensions').value.trim(),
+                        inStock: document.getElementById('product-stock').value === 'true',
+                        tags: document.getElementById('product-tags').value.trim()
+                    };
+                    
+                    // Validate required fields
+                    if (!formData.name || !formData.price || !formData.category || !formData.description || !formData.image) {
+                        alert('Please fill in all required fields.');
+                        return;
+                    }
+                    
+                    // Validate price
+                    if (formData.price <= 0) {
+                        alert('Price must be greater than 0.');
+                        return;
+                    }
+                    
+                    // Validate image URL
+                    try {
+                        new URL(formData.image);
+                    } catch {
+                        alert('Please enter a valid image URL.');
+                        return;
+                    }
+                    
+                    // Process tags
+                    if (formData.tags) {
+                        formData.tags = formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag);
+                    }
+                    
+                    // Remove empty optional fields
+                    Object.keys(formData).forEach(key => {
+                        if (formData[key] === '' || formData[key] === null || formData[key] === undefined) {
+                            delete formData[key];
+                        }
+                    });
+                    
+                    // Add the product
+                    await addNewProduct(formData);
+                });
+            }
+            
+            // Initialize authentication check
+            setTimeout(() => {
+                checkAuthStatus();
+            }, 100);
+        });
+
+        // Make functions globally available
+        window.clearForm = clearForm;
+    </script>
+</body>
+</html>

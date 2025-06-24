@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>About Us - Hana Store | Handmade Accessories for Men & Women</title>
+    <meta name="description" content="Discover the story behind Hana Store, your online destination for handmade accessories for men and women. Unique, handcrafted jewelry and fashion pieces for everyone.">
+    <meta name="keywords" content="about hana store, handmade accessories, men accessories, women accessories, jewelry, fashion, online shop">
+    <meta name="author" content="Hana Store">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="About Us - Hana Store | Handmade Accessories Shop">
+    <meta property="og:description" content="Discover the story behind Hana Store, your online destination for handmade accessories for men and women. Unique, handcrafted jewelry and fashion pieces for everyone.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://hanastore.com/about.html">
+    <meta property="og:image" content="https://hanastore.com/about-image.jpg">
+    <meta property="og:site_name" content="Hana Store">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About Us - Hana Store | Handmade Accessories Shop">
+    <meta name="twitter:description" content="Discover the story behind Hana Store, your online destination for handmade accessories for men and women. Unique, handcrafted jewelry and fashion pieces for everyone.">
+    <meta name="twitter:image" content="https://hanastore.com/about-image.jpg">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Hana Store">
+    <meta name="msapplication-TileColor" content="#1a1a1a">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700&display=swap"></noscript>
+    
+    <!-- Preload CSS -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></noscript>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    
+    <!-- Critical CSS -->
+    <link rel="stylesheet" href="../styles/styles.css">
+    
+    <!-- DNS Prefetch for External Resources -->
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//images.unsplash.com">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Hana Store",
+        "description": "Handmade accessories for men and women. Unique, handcrafted jewelry and fashion pieces for everyone.",
+        "url": "https://hanastore.com",
+        "logo": "https://hanastore.com/logo.png",
+        "image": "https://hanastore.com/about-image.jpg",
+        "foundingDate": "2020",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "US"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer service",
+            "email": "hello@hanastore.com"
+        },
+        "sameAs": [
+            "https://instagram.com/hanastore",
+            "https://facebook.com/hanastore",
+            "https://twitter.com/hanastore"
+        ]
+    }
+    </script>
+    
+    <!-- Firebase SDKs (Compat for HTML) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAbx9j0EnImiqjnOWQnHdaTMMSBrn5Cqho",
+        authDomain: "e-commerce-ffc52.firebaseapp.com",
+        projectId: "e-commerce-ffc52",
+        storageBucket: "e-commerce-ffc52.firebasestorage.app",
+        messagingSenderId: "560697224733",
+        appId: "1:560697224733:web:a72dd774f4c9c355eea0f4",
+        measurementId: "G-SVDW71Z94G"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    
+    <style>
+        /* About Page Specific Styles */
+        .about-hero {
+            background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="%23000" opacity="0.02"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+        
+        .about-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .about-hero-title {
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            font-weight: 200;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+        
+        .about-hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            font-weight: 300;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+        
+        .story-section {
+            padding: 100px 0;
+            background: var(--white);
+        }
+        
+        .story-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+        
+        .story-text {
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        
+        .story-text h3 {
+            font-size: 2rem;
+            font-weight: 200;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+        
+        .story-image {
+            position: relative;
+            border-radius: var(--border-radius-large);
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .story-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        
+        .story-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .values-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+        
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+        
+        .value-card {
+            background: var(--white);
+            padding: 3rem 2rem;
+            border-radius: var(--border-radius-large);
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .value-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-heavy);
+        }
+        
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2rem;
+            color: var(--text-primary);
+            transition: all 0.4s ease;
+        }
+        
+        .value-card:hover .value-icon {
+            background: var(--text-primary);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+        
+        .value-card h4 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .value-card p {
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+        
+        .stats-section {
+            padding: 80px 0;
+            background: var(--text-primary);
+            color: var(--white);
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        
+        .stat-number {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 200;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            font-weight: 300;
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .contact-section {
+            padding: 100px 0;
+            background: var(--accent-color);
+        }
+        
+        .contact-info {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: var(--border-radius-large);
+            box-shadow: var(--shadow-light);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--accent-color);
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow-light);
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--text-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+        
+        .contact-details h5 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .contact-details p {
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .story-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .contact-info {
+                padding: 2rem;
+            }
+            
+            .about-hero {
+                padding: 100px 0 60px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .value-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="brand-text">HANA</span>
+                <span class="brand-subtitle">STORE</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shop.html">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="about.html" aria-current="page">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="authDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user me-1"></i>Account
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="authDropdown">
+                            <li><a class="dropdown-item" href="login.html">
+                                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                            </a></li>
+                            <li><a class="dropdown-item" href="login.html#signup">
+                                <i class="fas fa-user-plus me-2"></i>Sign Up
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cart-icon" href="#" onclick="showCart()">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="about-hero-content">
+                <h1 class="about-hero-title">Our Handmade Story</h1>
+                <p class="about-hero-subtitle">
+                    Founded with a passion for creativity and craftsmanship, Hana Store curates the finest handmade accessories for men and women. As your trusted online destination, we bring unique, handcrafted jewelry and fashion pieces directly to your doorstep.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="container">
+            <div class="story-content">
+                <div>
+                    <h3>The Beginning</h3>
+                    <div class="story-text">
+                        <p>
+                            Hana Store was born from a simple yet powerful belief: that handmade accessories are more than just adornments—they're expressions of individuality and creativity for everyone. Our journey began in 2020 when we recognized a need for unique, handcrafted accessories for both men and women, easily accessed through online shopping.
+                        </p>
+                        <p>
+                            We started with a small collection of handmade pieces, each chosen for its exceptional craftsmanship and creative design. Today, we've grown into a trusted online destination for handmade accessories, serving customers worldwide who appreciate the art of handmade fashion.
+                        </p>
+                        <p>
+                            Our commitment to quality remains unwavering. Every piece in our online collection is carefully handmade by artisans who share our vision of creating accessories that are both beautiful and meaningful, delivered directly to your home.
+                        </p>
+                    </div>
+                </div>
+                <div class="story-image">
+                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hana Store online collection showcase" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <h2 class="section-title">Our Values</h2>
+            <p class="section-subtitle">The principles that guide our handmade journey</p>
+            
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h4>Quality Craftsmanship</h4>
+                    <p>We believe in the power of handmade craftsmanship. Every piece in our collection is carefully created for its superior quality and attention to detail.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h4>Timeless Design</h4>
+                    <p>We focus on curating and creating handmade pieces that transcend trends. Our accessories are designed to be cherished for years to come by both men and women.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h4>Sustainability</h4>
+                    <p>We're committed to responsible practices, working with partners who share our values of environmental consciousness and ethical handmade production.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>Community</h4>
+                    <p>We believe in building meaningful connections with our online customers, creating a community of people who appreciate handmade creativity and craftsmanship, regardless of gender or geographical boundaries.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>Excellence</h4>
+                    <p>We strive for excellence in everything we do, from handmade product selection to customer service, ensuring every interaction is exceptional.</p>
+                </div>
+                
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h4>Innovation</h4>
+                    <p>We continuously explore new handmade designs and techniques, staying ahead of trends while maintaining our commitment to creativity and seamless online shopping experiences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Happy Customers</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Unique Pieces</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">Years of Excellence</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Customer Satisfaction</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h2 class="section-title">Get in Touch</h2>
+                    <p class="section-subtitle">We'd love to hear from you and answer any questions about our online collection</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h5>Email Us</h5>
+                                <p>hello@hanastore.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h5>Call Us</h5>
+                                <p>+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h5>Visit Our Online Store</h5>
+                                <p>Shop our complete collection 24/7<br>at hanastore.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h5>Online Support Hours</h5>
+                                <p>Monday - Friday: 9AM - 6PM<br>Saturday: 10AM - 4PM<br>Sunday: Online orders only</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-5">
+                        <a href="contact.html" class="hero-btn">
+                            <i class="fas fa-paper-plane me-2" aria-hidden="true"></i>
+                            Send Us a Message
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-row">
+                <div class="footer-brand">
+                    <span class="brand-text">HANA STORE</span>
+                </div>
+                <div class="footer-links">
+                    <a href="../index.html">Home</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://instagram.com/hanastore" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/hanastore" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com/hanastore" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://pinterest.com/hanastore" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom-modern">
+                <p>&copy; 2024 Hana Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Preload JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="../scripts/script.js" defer></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+    </script>
+</body>
+</html> 

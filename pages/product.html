@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Product Details | Hana Store - Handmade Accessories for Men & Women</title>
+    <meta name="description" content="Shop this handmade accessory online at Hana Store. Discover unique, handcrafted jewelry and fashion pieces for men and women with free shipping and easy returns.">
+    <meta name="keywords" content="handmade accessories, men accessories, women accessories, jewelry, fashion, online shop, hana store">
+    <meta property="og:title" content="Product Details | Hana Store - Handmade Accessories Shop">
+    <meta property="og:description" content="Shop this handmade accessory online at Hana Store. Discover unique, handcrafted jewelry and fashion pieces for men and women.">
+    <meta name="twitter:title" content="Product Details | Hana Store - Handmade Accessories Shop">
+    <meta name="twitter:description" content="Shop this handmade accessory online at Hana Store. Discover unique, handcrafted jewelry and fashion pieces for men and women.">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../styles/styles.css">
+    <!-- Firebase SDKs (Compat for HTML) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAbx9j0EnImiqjnOWQnHdaTMMSBrn5Cqho",
+        authDomain: "e-commerce-ffc52.firebaseapp.com",
+        projectId: "e-commerce-ffc52",
+        storageBucket: "e-commerce-ffc52.firebasestorage.app",
+        messagingSenderId: "560697224733",
+        appId: "1:560697224733:web:a72dd774f4c9c355eea0f4",
+        measurementId: "G-SVDW71Z94G"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    <style>
+        /* Product Page Specific Styles */
+        .product-page {
+            background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+            min-height: 100vh;
+        }
+        
+        .breadcrumb {
+            background: transparent;
+            padding: 0;
+            margin-bottom: 3rem;
+        }
+        
+        .breadcrumb-item + .breadcrumb-item::before {
+            color: #aaa;
+            content: "›";
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+        
+        .breadcrumb-item a {
+            color: #666;
+            text-decoration: none;
+            font-weight: 300;
+            transition: color 0.3s ease;
+        }
+        
+        .breadcrumb-item a:hover {
+            color: #1a1a1a;
+        }
+        
+        .breadcrumb-item.active {
+            color: #1a1a1a;
+            font-weight: 400;
+        }
+        
+        .product-gallery {
+            position: relative;
+            background: #fff;
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        
+        .product-main-img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: zoom-in;
+        }
+        
+        .product-main-img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+        }
+        
+        .product-info-section {
+            background: #fff;
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            height: fit-content;
+        }
+        
+        .product-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 200;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .product-price {
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 400;
+            color: #1a1a1a;
+            margin-bottom: 2rem;
+        }
+        
+        .product-description {
+            font-size: 1.1rem;
+            font-weight: 300;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 2.5rem;
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding: 1rem 0;
+        }
+        
+        .quantity-label {
+            font-weight: 400;
+            color: #1a1a1a;
+            font-size: 1rem;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 0.5rem;
+        }
+        
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: none;
+            background: #fff;
+            color: #1a1a1a;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .quantity-btn:hover {
+            background: #1a1a1a;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        
+        .quantity-value {
+            font-size: 1.2rem;
+            font-weight: 500;
+            min-width: 3rem;
+            text-align: center;
+            color: #1a1a1a;
+        }
+        
+        .add-to-cart-btn {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            color: #fff;
+            border: none;
+            padding: 1.25rem 3rem;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .add-to-cart-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .add-to-cart-btn:hover::before {
+            left: 100%;
+        }
+        
+        .add-to-cart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .product-features {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            color: #666;
+        }
+        
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.7rem;
+        }
+        
+        .related-section {
+            background: #fff;
+            border-radius: 25px;
+            padding: 3rem;
+            margin-top: 4rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+        }
+        
+        .related-title {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 200;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #1a1a1a;
+        }
+        
+        .related-products .product-card {
+            min-height: 450px;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .related-products .product-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.15);
+        }
+        
+        .related-products .product-image {
+            height: 300px;
+        }
+        
+        .related-products .product-info {
+            padding: 2rem;
+        }
+        
+        .related-products .product-info h5 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+        
+        .related-products .price {
+            font-size: 1.3rem;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .product-info-section {
+                padding: 2rem;
+                margin-top: 2rem;
+            }
+            
+            .product-gallery {
+                padding: 1.5rem;
+            }
+            
+            .related-section {
+                padding: 2rem;
+            }
+            
+            .quantity-selector {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="product-page">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="brand-text">HANA</span>
+                <span class="brand-subtitle">STORE</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shop.html">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="authDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user me-1"></i>Account
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="authDropdown">
+                            <li><a class="dropdown-item" href="login.html">
+                                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                            </a></li>
+                            <li><a class="dropdown-item" href="login.html#signup">
+                                <i class="fas fa-user-plus me-2"></i>Sign Up
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cart-icon" href="#" onclick="showCart()">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 120px;">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="shop.html">Shop</a></li>
+                    <li class="breadcrumb-item active" aria-current="page" id="breadcrumb-product">Product</li>
+                </ol>
+            </nav>
+
+            <!-- Product Details -->
+            <div class="row align-items-start mb-5">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="product-gallery">
+                        <img id="product-image" src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Product" class="product-main-img">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="product-info-section">
+                        <h1 class="product-title" id="product-name">Product Name</h1>
+                        <h2 class="product-price" id="product-price">LE 0.00</h2>
+                        <p class="product-description" id="product-description">
+                            This handmade piece is a unique addition to your collection, crafted with care and creativity. Perfect for both men and women who appreciate quality and individuality.
+                        </p>
+                        
+                        <div class="quantity-selector">
+                            <span class="quantity-label">Quantity:</span>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="changeQuantity(-1)">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <span class="quantity-value" id="quantity-value">1</span>
+                                <button class="quantity-btn" onclick="changeQuantity(1)">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button class="add-to-cart-btn" onclick="addProductDetailToCart()">
+                            <i class="fas fa-shopping-bag me-2"></i> Add to Cart
+                        </button>
+                        
+                        <div class="product-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-shipping-fast"></i>
+                                </div>
+                                <span>Free shipping on handmade orders over LE 100</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-undo"></i>
+                                </div>
+                                <span>30-day return policy on handmade items</span>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <span>2-year warranty on handmade accessories</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Products -->
+            <div class="related-section">
+                <h2 class="related-title">You May Also Like</h2>
+                <div class="row g-4">
+                    <!-- Related products will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-row">
+                <div class="footer-brand">
+                    <span class="brand-text">HANA STORE</span>
+                </div>
+                <div class="footer-links">
+                    <a href="../index.html">Home</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://instagram.com/hanastore" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/hanastore" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com/hanastore" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://pinterest.com/hanastore" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom-modern">
+                <p>&copy; 2024 Hana Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../scripts/script.js"></script>
+    <script>
+        // Product data
+        let currentProduct = null;
+        let productQuantity = 1;
+        
+        // Parse URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+        
+        // Load product data from Firestore
+        async function loadProductFromFirestore() {
+            const productId = getUrlParameter('id');
+            
+            if (!productId) {
+                // Fallback to old URL parameter method for backward compatibility
+                const name = getUrlParameter('name');
+                const price = getUrlParameter('price');
+                const image = getUrlParameter('image');
+                const category = getUrlParameter('category');
+                
+                if (name && price && image) {
+                    currentProduct = {
+                        id: 'legacy-' + Date.now(),
+                        name: name,
+                        price: parseFloat(price),
+                        image: image,
+                        category: category || 'accessories',
+                        description: 'This handmade piece is a unique addition to your collection, crafted with care and creativity. Perfect for both men and women who appreciate quality and individuality.'
+                    };
+                    updateProductDisplay();
+                } else {
+                    showError('Product not found');
+                }
+                return;
+            }
+            
+            try {
+                // Show loading state
+                showLoading();
+                
+                const db = firebase.firestore();
+                const productDoc = await db.collection('products').doc(productId).get();
+                
+                if (productDoc.exists) {
+                    currentProduct = {
+                        id: productDoc.id,
+                        ...productDoc.data()
+                    };
+                    updateProductDisplay();
+                    loadRelatedProducts();
+                } else {
+                    showError('Product not found');
+                }
+            } catch (error) {
+                console.error('Error loading product:', error);
+                showError('Error loading product. Please try again.');
+            }
+        }
+        
+        // Show loading state
+        function showLoading() {
+            document.getElementById('product-name').textContent = 'Loading...';
+            document.getElementById('product-price').textContent = 'LE 0.00';
+            document.getElementById('product-description').textContent = 'Loading product details...';
+            document.getElementById('product-image').src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkxvYWRpbmcuLi48L3RleHQ+PC9zdmc+';
+        }
+        
+        // Show error state
+        function showError(message) {
+            document.getElementById('product-name').textContent = 'Product Not Found';
+            document.getElementById('product-price').textContent = 'LE 0.00';
+            document.getElementById('product-description').textContent = message;
+            document.getElementById('product-image').src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmZmIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2NjYyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBhdmFpbGFibGU8L3RleHQ+PC9zdmc+';
+        }
+        
+        // Update product display
+        function updateProductDisplay() {
+            if (!currentProduct) return;
+            
+            // Update page title
+            document.getElementById('page-title').textContent = currentProduct.name + ' | Hana Store - Online Elegant Accessories';
+            
+            // Update breadcrumb
+            document.getElementById('breadcrumb-product').textContent = currentProduct.name;
+            
+            // Update product image
+            document.getElementById('product-image').src = currentProduct.image || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmZmIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2NjYyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBhdmFpbGFibGU8L3RleHQ+PC9zdmc+';
+            document.getElementById('product-image').alt = currentProduct.name;
+            
+            // Update product name
+            document.getElementById('product-name').textContent = currentProduct.name;
+            
+            // Update product price
+            document.getElementById('product-price').textContent = 'LE ' + (currentProduct.price || 0).toFixed(2);
+            
+            // Update product description
+            const description = currentProduct.description || 'This handmade piece is a unique addition to your collection, crafted with care and creativity. Perfect for both men and women who appreciate quality and individuality.';
+            document.getElementById('product-description').textContent = description;
+        }
+        
+        // Load related products
+        async function loadRelatedProducts() {
+            if (!currentProduct) return;
+            
+            try {
+                const db = firebase.firestore();
+                let query = db.collection('products').where('category', '==', currentProduct.category);
+                
+                // Exclude current product
+                query = query.where(firebase.firestore.FieldPath.documentId(), '!=', currentProduct.id);
+                
+                const snapshot = await query.limit(3).get();
+                const relatedProducts = [];
+                
+                snapshot.forEach(doc => {
+                    relatedProducts.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+                
+                // If we don't have enough products in the same category, get some from other categories
+                if (relatedProducts.length < 3) {
+                    const remainingCount = 3 - relatedProducts.length;
+                    const otherQuery = db.collection('products')
+                        .where(firebase.firestore.FieldPath.documentId(), '!=', currentProduct.id)
+                        .limit(remainingCount);
+                    
+                    const otherSnapshot = await otherQuery.get();
+                    otherSnapshot.forEach(doc => {
+                        const product = {
+                            id: doc.id,
+                            ...doc.data()
+                        };
+                        // Only add if not already in relatedProducts
+                        if (!relatedProducts.find(p => p.id === product.id)) {
+                            relatedProducts.push(product);
+                        }
+                    });
+                }
+                
+                updateRelatedProductsDisplay(relatedProducts);
+            } catch (error) {
+                console.error('Error loading related products:', error);
+                // Hide related products section if there's an error
+                document.querySelector('.related-section').style.display = 'none';
+            }
+        }
+        
+        // Update related products display
+        function updateRelatedProductsDisplay(products) {
+            const relatedSection = document.querySelector('.related-section .row');
+            relatedSection.innerHTML = '';
+            
+            if (products.length === 0) {
+                document.querySelector('.related-section').style.display = 'none';
+                return;
+            }
+            
+            products.forEach(product => {
+                const productCard = `
+                    <div class="col-lg-4 col-md-6">
+                        <div class="product-card" onclick="window.location.href='product.html?id=${product.id}'">
+                            <div class="product-image">
+                                <img src="${product.image || 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZmZmIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iI2NjYyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlIG5vdCBhdmFpbGFibGU8L3RleHQ+PC9zdmc+'}" alt="${product.name}" class="img-fluid">
+                                <div class="product-overlay">
+                                    <button class="btn">View Details</button>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h5>${product.name}</h5>
+                                <p class="price">LE ${(product.price || 0).toFixed(2)}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                relatedSection.innerHTML += productCard;
+            });
+        }
+        
+        function changeQuantity(delta) {
+            productQuantity = Math.max(1, productQuantity + delta);
+            document.getElementById('quantity-value').textContent = productQuantity;
+        }
+        
+        function addProductDetailToCart() {
+            if (!currentProduct) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Product not loaded. Please refresh the page.'
+                });
+                return;
+            }
+            
+            for (let i = 0; i < productQuantity; i++) {
+                addToCart(currentProduct.name, currentProduct.price, currentProduct.image);
+            }
+            
+            Swal.fire({
+                icon: 'success',
+                title: 'Added to Cart!',
+                text: `${productQuantity} ${productQuantity === 1 ? 'item' : 'items'} added to your cart.`,
+                timer: 2000,
+                showConfirmButton: false
+            });
+            
+            productQuantity = 1;
+            document.getElementById('quantity-value').textContent = 1;
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProductFromFirestore();
+        });
+    </script>
+</body>
+</html> 

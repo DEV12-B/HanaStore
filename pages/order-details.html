@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details | Hana Store - Handmade Accessories for Men & Women</title>
+    <meta name="description" content="View your order details and track your shipment at Hana Store.">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../styles/styles.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAbx9j0EnImiqjnOWQnHdaTMMSBrn5Cqho",
+        authDomain: "e-commerce-ffc52.firebaseapp.com",
+        projectId: "e-commerce-ffc52",
+        storageBucket: "e-commerce-ffc52.firebasestorage.app",
+        messagingSenderId: "560697224733",
+        appId: "1:560697224733:web:a72dd774f4c9c355eea0f4",
+        measurementId: "G-SVDW71Z94G"
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    <style>
+        .order-details-page {
+            background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+            min-height: 100vh;
+        }
+        
+        .order-section {
+            background: #fff;
+            border-radius: 25px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .order-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            color: #fff;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .order-number {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+        
+        .order-date {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-confirmed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-shipped {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-delivered {
+            background: #d1e7dd;
+            color: #0f5132;
+        }
+        
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        
+        .order-item-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+        
+        .order-item-details {
+            flex: 1;
+        }
+        
+        .order-item-name {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+        
+        .order-item-price {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .info-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+        
+        .info-title {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .info-content {
+            font-weight: 300;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            font-weight: 300;
+        }
+        
+        .summary-row.total {
+            font-weight: 500;
+            font-size: 1.3rem;
+            color: #1a1a1a;
+            border-top: 2px solid #e9ecef;
+            margin-top: 1rem;
+            padding-top: 1rem;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e9ecef;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.5rem;
+            top: 0.25rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: #1a1a1a;
+        }
+        
+        .timeline-item.active::before {
+            background: #28a745;
+        }
+        
+        .timeline-content {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-left: 1rem;
+        }
+        
+        .timeline-title {
+            font-weight: 400;
+            color: #1a1a1a;
+            margin-bottom: 0.25rem;
+        }
+        
+        .timeline-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .order-section {
+                padding: 1.5rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body class="order-details-page">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <span class="brand-text">HANA</span>
+                <span class="brand-subtitle">STORE</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shop.html">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="authDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user me-1"></i>Account
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="authDropdown">
+                            <li><a class="dropdown-item" href="login.html">
+                                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                            </a></li>
+                            <li><a class="dropdown-item" href="login.html#signup">
+                                <i class="fas fa-user-plus me-2"></i>Sign Up
+                            </a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link cart-icon" href="#" onclick="showCart()">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main style="padding-top: 120px;">
+        <div class="container">
+            <!-- Order Header -->
+            <div class="order-header">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <div class="order-number" id="order-number">Order #HANA123456</div>
+                        <div class="order-date" id="order-date">Placed on January 1, 2024</div>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <span class="status-badge" id="status-badge">Pending</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Order Items -->
+                    <div class="order-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-shopping-bag"></i>
+                            Order Items
+                        </h2>
+                        <div id="order-items">
+                            <!-- Order items will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Order Timeline -->
+                    <div class="order-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-clock"></i>
+                            Order Timeline
+                        </h2>
+                        <div class="timeline" id="order-timeline">
+                            <!-- Timeline will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <!-- Order Summary -->
+                    <div class="order-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-receipt"></i>
+                            Order Summary
+                        </h2>
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">LE 0.00</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Shipping:</span>
+                            <span id="shipping-cost">LE 0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span id="total">LE 0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Customer Information -->
+                    <div class="order-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-user"></i>
+                            Customer Information
+                        </h2>
+                        <div id="customer-info">
+                            <!-- Customer info will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Shipping Information -->
+                    <div class="order-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-shipping-fast"></i>
+                            Shipping Information
+                        </h2>
+                        <div id="shipping-info">
+                            <!-- Shipping info will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Payment Information -->
+                    <div class="order-section">
+                        <h2 class="section-title">
+                            <i class="fas fa-credit-card"></i>
+                            Payment Information
+                        </h2>
+                        <div id="payment-info">
+                            <!-- Payment info will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <a href="shop.html" class="btn-secondary">
+                            <i class="fas fa-shopping-bag me-2"></i>
+                            Continue Shopping
+                        </a>
+                        <a href="#" class="btn-secondary" onclick="window.print()">
+                            <i class="fas fa-print me-2"></i>
+                            Print Receipt
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+        <div class="container">
+            <div class="footer-row">
+                <div class="footer-brand">
+                    <span class="brand-text">HANA STORE</span>
+                </div>
+                <div class="footer-links">
+                    <a href="../index.html">Home</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://instagram.com/hanastore" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/hanastore" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://twitter.com/hanastore" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://pinterest.com/hanastore" aria-label="Pinterest"><i class="fab fa-pinterest"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom-modern">
+                <p>&copy; 2024 Hana Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="../scripts/script.js"></script>
+    <script>
+        let orderData = null;
+
+        // Parse URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Load order data
+        async function loadOrderData(user) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+            
+            if (!orderId) {
+                showError('Order ID not found');
+                return;
+            }
+            try {
+                const db = firebase.firestore();
+                const orderDoc = await db.collection('orders').doc(orderId).get();
+                if (orderDoc.exists) {
+                    const data = orderDoc.data();
+                    orderData = {
+                        id: orderDoc.id,
+                        ...data,
+                        // Convert Firestore Timestamp to JavaScript Date
+                        orderDate: data.orderDate ? (data.orderDate.toDate ? data.orderDate.toDate() : new Date(data.orderDate)) : new Date()
+                    };
+                    // Check if user owns this order or is admin
+                    if (orderData.userId !== user.uid) {
+                        // Check if user is admin
+                        const userDoc = await db.collection('users').doc(user.uid).get();
+                        if (!userDoc.exists || !userDoc.data().isAdmin) {
+                            showError('You do not have permission to view this order');
+                            return;
+                        }
+                    }
+                    updateOrderDisplay();
+                } else {
+                    showError('Order not found');
+                }
+            } catch (error) {
+                console.error('Error loading order:', error);
+                showError('Error loading order details');
+            }
+        }
+
+        // Show error
+        function showError(message) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: message
+            }).then(() => {
+                window.location.href = 'shop.html';
+            });
+        }
+
+        // Update order display
+        function updateOrderDisplay() {
+            if (!orderData) return;
+
+            // Update header
+            document.getElementById('order-number').textContent = `Order #${orderData.orderNumber}`;
+            document.getElementById('order-date').textContent = `Placed on ${formatDate(orderData.orderDate)}`;
+            
+            // Update status
+            const statusBadge = document.getElementById('status-badge');
+            statusBadge.textContent = orderData.status.charAt(0).toUpperCase() + orderData.status.slice(1);
+            statusBadge.className = `status-badge status-${orderData.status}`;
+
+            // Update order items
+            updateOrderItems();
+
+            // Update order summary
+            updateOrderSummary();
+
+            // Update customer information
+            updateCustomerInfo();
+
+            // Update shipping information
+            updateShippingInfo();
+
+            // Update payment information
+            updatePaymentInfo();
+
+            // Update timeline
+            updateTimeline();
+        }
+
+        // Update order items
+        function updateOrderItems() {
+            const container = document.getElementById('order-items');
+            container.innerHTML = '';
+
+            // Group items by name and count quantities
+            const groupedItems = {};
+            orderData.items.forEach(item => {
+                if (groupedItems[item.name]) {
+                    groupedItems[item.name].quantity += 1;
+                } else {
+                    groupedItems[item.name] = {
+                        ...item,
+                        quantity: 1
+                    };
+                }
+            });
+
+            Object.values(groupedItems).forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'order-item';
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="order-item-img">
+                    <div class="order-item-details">
+                        <div class="order-item-name">${item.name}</div>
+                        <div class="order-item-price">LE ${(item.price * item.quantity).toFixed(2)} (Qty: ${item.quantity})</div>
+                    </div>
+                `;
+                container.appendChild(itemElement);
+            });
+        }
+
+        // Update order summary
+        function updateOrderSummary() {
+            document.getElementById('subtotal').textContent = `LE ${orderData.totals.subtotal.toFixed(2)}`;
+            document.getElementById('shipping-cost').textContent = `LE ${orderData.totals.shipping.toFixed(2)}`;
+            document.getElementById('total').textContent = `LE ${orderData.totals.total.toFixed(2)}`;
+        }
+
+        // Update customer information
+        function updateCustomerInfo() {
+            const container = document.getElementById('customer-info');
+            const customer = orderData.customerInfo;
+            
+            container.innerHTML = `
+                <div class="info-content">
+                    <div><strong>Name:</strong> ${customer.firstName} ${customer.lastName}</div>
+                    <div><strong>Email:</strong> ${customer.email}</div>
+                    <div><strong>Phone:</strong> ${customer.phone}</div>
+                </div>
+            `;
+        }
+
+        // Update shipping information
+        function updateShippingInfo() {
+            const container = document.getElementById('shipping-info');
+            const customer = orderData.customerInfo;
+            const shipping = orderData.shipping;
+            
+            container.innerHTML = `
+                <div class="info-content">
+                    <div><strong>Address:</strong> ${customer.address}</div>
+                    <div><strong>City:</strong> ${customer.city}</div>
+                    <div><strong>Shipping Method:</strong> ${shipping.method.charAt(0).toUpperCase() + shipping.method.slice(1)}</div>
+                    <div><strong>Shipping Cost:</strong> LE ${shipping.cost.toFixed(2)}</div>
+                </div>
+            `;
+        }
+
+        // Update payment information
+        function updatePaymentInfo() {
+            const container = document.getElementById('payment-info');
+            const payment = orderData.payment;
+            
+            container.innerHTML = `
+                <div class="info-content">
+                    <div><strong>Payment Method:</strong> ${payment.method.charAt(0).toUpperCase() + payment.method.slice(1)}</div>
+                    <div><strong>Status:</strong> ${orderData.status.charAt(0).toUpperCase() + orderData.status.slice(1)}</div>
+                </div>
+            `;
+        }
+
+        // Update timeline
+        function updateTimeline() {
+            const container = document.getElementById('order-timeline');
+            const timeline = [
+                {
+                    title: 'Order Placed',
+                    date: orderData.orderDate,
+                    active: true
+                },
+                {
+                    title: 'Order Confirmed',
+                    date: orderData.status !== 'pending' ? new Date(orderData.orderDate.getTime() + 24 * 60 * 60 * 1000) : null,
+                    active: orderData.status !== 'pending'
+                },
+                {
+                    title: 'Order Shipped',
+                    date: orderData.status === 'shipped' || orderData.status === 'delivered' ? new Date(orderData.orderDate.getTime() + 2 * 24 * 60 * 60 * 1000) : null,
+                    active: orderData.status === 'shipped' || orderData.status === 'delivered'
+                },
+                {
+                    title: 'Order Delivered',
+                    date: orderData.status === 'delivered' ? new Date(orderData.orderDate.getTime() + 5 * 24 * 60 * 60 * 1000) : null,
+                    active: orderData.status === 'delivered'
+                }
+            ];
+
+            container.innerHTML = '';
+            timeline.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = `timeline-item ${item.active ? 'active' : ''}`;
+                itemElement.innerHTML = `
+                    <div class="timeline-content">
+                        <div class="timeline-title">${item.title}</div>
+                        <div class="timeline-date">${item.date ? formatDate(item.date) : 'Pending'}</div>
+                    </div>
+                `;
+                container.appendChild(itemElement);
+            });
+        }
+
+        // Format date
+        function formatDate(date) {
+            if (!date) return 'N/A';
+            
+            // Convert Firestore Timestamp to JavaScript Date if needed
+            if (date && typeof date.toDate === 'function') {
+                date = date.toDate();
+            }
+            
+            // Ensure we have a valid Date object
+            if (!(date instanceof Date) || isNaN(date.getTime())) {
+                return 'Invalid Date';
+            }
+            
+            return new Intl.DateTimeFormat('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            }).format(date);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    loadOrderData(user);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Authentication Required',
+                        text: 'Please sign in to view order details.',
+                        confirmButtonText: 'Sign In'
+                    }).then(() => {
+                        window.location.href = 'login.html';
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

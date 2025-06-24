@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO Meta Tags -->
+    <title>
+      Hana Store - Handmade Accessories for Men & Women | Online Shop
+    </title>
+    <meta
+      name="description"
+      content="Discover handmade accessories at Hana Store, your online destination for unique, handcrafted jewelry and fashion pieces for men and women. Shop our curated collection from anywhere, anytime. Free shipping on orders over LE 50."
+    />
+    <meta
+      name="keywords"
+      content="handmade accessories, men accessories, women accessories, jewelry, fashion, online shop, hana store"
+    />
+    <meta name="author" content="Hana Store" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph Meta Tags -->
+    <meta
+      property="og:title"
+      content="Hana Store - Handmade Accessories | Online Shop"
+    />
+    <meta
+      property="og:description"
+      content="Discover handmade accessories at Hana Store, your online destination for unique, handcrafted jewelry and fashion pieces for men and women. Shop our curated collection from anywhere, anytime."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hanastore.com" />
+    <meta property="og:image" content="https://hanastore.com/og-image.jpg" />
+    <meta property="og:site_name" content="Hana Store" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Hana Store - Handmade Accessories | Online Shop"
+    />
+    <meta
+      name="twitter:description"
+      content="Discover handmade accessories at Hana Store, your online destination for unique, handcrafted jewelry and fashion pieces for men and women."
+    />
+    <meta
+      name="twitter:image"
+      content="https://hanastore.com/twitter-image.jpg"
+    />
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1a1a1a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Hana Store" />
+    <meta name="msapplication-TileColor" content="#1a1a1a" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#1a1a1a" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Preload Critical Resources -->
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700&display=swap"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700&display=swap"
+    /></noscript>
+
+    <!-- Preload CSS -->
+    <link
+      rel="preload"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    /></noscript>
+
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript
+      ><link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    /></noscript>
+
+    <!-- Critical CSS -->
+    <link rel="stylesheet" href="styles/styles.css" />
+
+    <!-- DNS Prefetch for External Resources -->
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="//images.unsplash.com" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "OnlineStore",
+        "name": "Hana Store",
+        "description": "Handmade accessories for men and women. Unique, handcrafted jewelry and fashion pieces for everyone.",
+        "url": "https://hanastore.com",
+        "logo": "https://hanastore.com/logo.png",
+        "image": "https://hanastore.com/store-image.jpg",
+        "foundingDate": "2020",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "US"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "email": "hello@hanastore.com"
+        },
+        "sameAs": [
+          "https://instagram.com/hanastore",
+          "https://facebook.com/hanastore",
+          "https://twitter.com/hanastore"
+        ]
+      }
+    </script>
+
+    <!-- Firebase SDKs (Compat for HTML) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyAbx9j0EnImiqjnOWQnHdaTMMSBrn5Cqho",
+        authDomain: "e-commerce-ffc52.firebaseapp.com",
+        projectId: "e-commerce-ffc52",
+        storageBucket: "e-commerce-ffc52.firebasestorage.app",
+        messagingSenderId: "560697224733",
+        appId: "1:560697224733:web:a72dd774f4c9c355eea0f4",
+        measurementId: "G-SVDW71Z94G",
+      };
+      firebase.initializeApp(firebaseConfig);
+    </script>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <span class="brand-text">HANA</span>
+          <span class="brand-subtitle">STORE</span>
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html" aria-current="page">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pages/shop.html">Shop</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pages/about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="pages/contact.html">Contact</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="authDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user me-1"></i>Account
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="authDropdown">
+                <li><a class="dropdown-item" href="pages/login.html">
+                  <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                </a></li>
+                <li><a class="dropdown-item" href="pages/login.html#signup">
+                  <i class="fas fa-user-plus me-2"></i>Sign Up
+                </a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link cart-icon"
+                href="#"
+                onclick="showCart()"
+                aria-label="Shopping cart"
+              >
+                <i class="fas fa-shopping-bag" aria-hidden="true"></i>
+                <span class="cart-count" aria-live="polite">0</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">Handmade Accessories for Men & Women</h1>
+          <p class="hero-subtitle">
+            Discover our curated collection of unique, handcrafted jewelry and
+            fashion accessories for everyone. Shop online from anywhere,
+            anytime, and express your style with pieces made with care and
+            creativity.
+          </p>
+          <a href="pages/shop.html" class="hero-btn">
+            <i class="fas fa-shopping-bag me-2" aria-hidden="true"></i>
+            Shop Online Now
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Collections Section -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Our Handmade Collections</h2>
+        <p class="section-subtitle">
+          Curated, handcrafted pieces for men and women that blend creativity
+          with quality
+        </p>
+
+        <div class="categories-grid">
+          <div
+            class="category-box"
+            onclick="window.location.href='pages/shop.html?category=necklaces'"
+          >
+            <div class="category-image">
+              <img
+                src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                alt="Elegant Pearl Necklace Collection"
+                class="img-fluid"
+                loading="lazy"
+              />
+              <div class="category-overlay">
+                <button class="btn">Explore Necklaces</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Necklaces</h3>
+              <p class="category-description">
+                Discover our stunning collection of handcrafted necklaces, from delicate chains to statement pieces. Each design is carefully crafted to complement your unique style.
+              </p>
+              <div class="category-price">From LE 49.99</div>
+              <div class="category-stats">
+                <span class="category-count">15+ unique designs</span>
+                <i class="fas fa-gem category-icon"></i>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="category-box"
+            onclick="window.location.href='pages/shop.html?category=bracelets'"
+          >
+            <div class="category-image">
+              <img
+                src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                alt="Minimalist Gold Bracelet Collection"
+                class="img-fluid"
+                loading="lazy"
+              />
+              <div class="category-overlay">
+                <button class="btn">Explore Bracelets</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Bracelets</h3>
+              <p class="category-description">
+                Elegant bracelets that add the perfect finishing touch to any outfit. Our handcrafted designs range from minimalist to bold, all made with premium materials.
+              </p>
+              <div class="category-price">From LE 39.99</div>
+              <div class="category-stats">
+                <span class="category-count">12+ unique designs</span>
+                <i class="fas fa-circle category-icon"></i>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="category-box"
+            onclick="window.location.href='pages/shop.html?category=phone-chains'"
+          >
+            <div class="category-image">
+              <img
+                src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                alt="Decorative Phone Chain Collection"
+                class="img-fluid"
+                loading="lazy"
+              />
+              <div class="category-overlay">
+                <button class="btn">Explore Phone Chains</button>
+              </div>
+            </div>
+            <div class="category-info">
+              <h3 class="category-title">Phone Chains</h3>
+              <p class="category-description">
+                Add personality to your phone with our handcrafted phone chains. Functional and fashionable, these accessories protect your device while expressing your style.
+              </p>
+              <div class="category-price">From LE 19.99</div>
+              <div class="category-stats">
+                <span class="category-count">20+ unique designs</span>
+                <i class="fas fa-mobile-alt category-icon"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section">
+      <div class="container">
+        <div class="about-content">
+          <div>
+            <h2 class="section-title text-left">About Hana Store</h2>
+            <p class="about-text">
+              At Hana Store, we believe that true style is personal and
+              handmade. Our carefully curated online collection of accessories
+              is designed for everyone who appreciates creativity, quality, and
+              individuality. Each piece is handcrafted to complement your unique
+              style and enhance your everyday moments.
+            </p>
+            <p class="about-text">
+              As your online destination for handmade accessories, we bring
+              unique, handcrafted jewelry and fashion pieces for both men and
+              women directly to your doorstep. Our commitment to quality,
+              exceptional customer service, and a seamless online shopping
+              experience ensures that every purchase is as delightful as the
+              pieces themselves.
+            </p>
+            <a href="pages/about.html" class="hero-btn">
+              <i class="fas fa-arrow-right me-2" aria-hidden="true"></i>
+              Learn More
+            </a>
+          </div>
+          <div class="about-image">
+            <img
+              src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+              alt="Hana Store online collection showcase"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="container">
+        <h2 class="section-title">Get in Touch</h2>
+        <p class="section-subtitle">
+          Have questions? We'd love to hear from you.
+        </p>
+
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <form
+              class="contact-form"
+              onsubmit="submitContactForm(); return false;"
+            >
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="contact-name" class="form-label">Name</label>
+                    <input
+                      type="text"
+                      id="contact-name"
+                      class="form-control"
+                      required
+                      aria-describedby="name-help"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="contact-email" class="form-label">Email</label>
+                    <input
+                      type="email"
+                      id="contact-email"
+                      class="form-control"
+                      required
+                      aria-describedby="email-help"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="contact-message" class="form-label">Message</label>
+                <textarea
+                  id="contact-message"
+                  class="form-control"
+                  rows="5"
+                  required
+                  aria-describedby="message-help"
+                ></textarea>
+              </div>
+              <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane me-2" aria-hidden="true"></i>
+                Send Message
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-modern">
+      <div class="container">
+        <div class="footer-row">
+          <div class="footer-brand">
+            <span class="brand-text">HANA STORE</span>
+          </div>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="pages/shop.html">Shop</a>
+            <a href="pages/about.html">About</a>
+            <a href="pages/contact.html">Contact</a>
+          </div>
+          <div class="footer-social">
+            <a href="https://instagram.com/hanastore" aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="https://facebook.com/hanastore" aria-label="Facebook"
+              ><i class="fab fa-facebook"></i
+            ></a>
+            <a href="https://twitter.com/hanastore" aria-label="Twitter"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="https://pinterest.com/hanastore" aria-label="Pinterest"
+              ><i class="fab fa-pinterest"></i
+            ></a>
+          </div>
+        </div>
+        <div class="footer-bottom-modern">
+          <p>&copy; 2024 Hana Store. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Preload JavaScript -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      defer
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+
+    <!-- Custom JavaScript -->
+    <script src="scripts/script.js" defer></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((registration) => {
+              console.log("SW registered: ", registration);
+            })
+            .catch((registrationError) => {
+              console.log("SW registration failed: ", registrationError);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>

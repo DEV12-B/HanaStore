@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Hana Store</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Playfair+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../styles/styles.css">
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    
+    <style>
+        .admin-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            color: white;
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+        
+        .admin-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .stats-card.success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+        
+        .stats-card.warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .stats-card.info {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stats-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .nav-tabs {
+            border: none;
+            margin-bottom: 2rem;
+        }
+        
+        .nav-tabs .nav-link {
+            border: none;
+            color: #666;
+            font-weight: 500;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tabs .nav-link.active {
+            background: #1a1a1a;
+            color: white;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            background: #f8f9fa;
+            color: #1a1a1a;
+        }
+        
+        .table {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+        
+        .table thead th {
+            background: #f8f9fa;
+            border: none;
+            font-weight: 600;
+            color: #1a1a1a;
+            padding: 1rem;
+        }
+        
+        .table tbody td {
+            border: none;
+            padding: 1rem;
+            vertical-align: middle;
+        }
+        
+        .table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .btn-admin {
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0.25rem;
+        }
+        
+        .btn-admin:hover {
+            background: #333;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-admin.btn-sm {
+            padding: 0.25rem 0.75rem;
+            font-size: 0.875rem;
+        }
+        
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-confirmed { background: #d1ecf1; color: #0c5460; }
+        .status-shipped { background: #d4edda; color: #155724; }
+        .status-delivered { background: #d1e7dd; color: #0f5132; }
+        .status-cancelled { background: #f8d7da; color: #721c24; }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .admin-only {
+            display: none;
+        }
+        
+        .user-only {
+            display: block;
+        }
+        
+        .product-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .pagination {
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .page-link {
+            border: none;
+            color: #1a1a1a;
+            padding: 0.75rem 1rem;
+            margin: 0 0.25rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .page-link:hover {
+            background: #1a1a1a;
+            color: white;
+        }
+        
+        .page-item.active .page-link {
+            background: #1a1a1a;
+            color: white;
+        }
+        
+        .loading-spinner {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #666;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        /* Admin user styling */
+        .table-warning {
+            background-color: rgba(255, 193, 7, 0.1) !important;
+        }
+        
+        .table-warning:hover {
+            background-color: rgba(255, 193, 7, 0.2) !important;
+        }
+        
+        .fa-crown {
+            color: #ffffff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+        
+        .badge.bg-warning {
+            background: linear-gradient(45deg, #ffc107, #ffca2c) !important;
+            color: #000 !important;
+            font-weight: 600;
+        }
+        
+        .text-warning {
+            color: #ffc107 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <span class="brand-text">HANA</span>
+                <span class="brand-subtitle">STORE</span>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="shop.html">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="add-products.html">Add Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="admin-management.html">Admin Management</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Header -->
+    <section class="admin-header">
+        <div class="container">
+            <h1 class="hero-title">
+                <i class="fas fa-chart-line me-3"></i>
+                Admin Dashboard
+            </h1>
+            <p class="hero-subtitle">
+                Manage your store's products, orders, and users
+            </p>
+        </div>
+    </section>
+
+    <!-- Admin Content -->
+    <section class="py-5">
+        <div class="container">
+            <!-- Admin Only Section -->
+            <div class="admin-only">
+                <!-- Statistics Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="stats-number" id="total-products">0</div>
+                            <div class="stats-label">Total Products</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card success">
+                            <div class="stats-number" id="total-orders">0</div>
+                            <div class="stats-label">Total Orders</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card warning">
+                            <div class="stats-number" id="total-users">0</div>
+                            <div class="stats-label">Total Users</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card info">
+                            <div class="stats-number" id="total-revenue">LE 0</div>
+                            <div class="stats-label">Total Revenue</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="products-tab" data-bs-toggle="tab" data-bs-target="#products" type="button" role="tab">
+                            <i class="fas fa-box me-2"></i>Products
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab">
+                            <i class="fas fa-shopping-cart me-2"></i>Orders
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab">
+                            <i class="fas fa-users me-2"></i>Users
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="adminTabContent">
+                    <!-- Products Tab -->
+                    <div class="tab-pane fade show active" id="products" role="tabpanel">
+                        <div class="admin-card">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h3><i class="fas fa-box text-primary me-2"></i>Products Management</h3>
+                                <div>
+                                    <button class="btn btn-danger me-2" onclick="adminDashboard.clearAllProducts()">
+                                        <i class="fas fa-trash-alt me-2"></i>Clear All Products
+                                    </button>
+                                    <a href="add-products.html" class="btn btn-admin">
+                                        <i class="fas fa-plus me-2"></i>Add Product
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="search-box">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" class="search-input" id="product-search" placeholder="Search products...">
+                            </div>
+                            
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Name</th>
+                                            <th>Category</th>
+                                            <th>Price</th>
+                                            <th>Stock</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="products-table-body">
+                                        <tr>
+                                            <td colspan="6" class="text-center">
+                                                <div class="loading-spinner">
+                                                    <i class="fas fa-spinner fa-spin fa-2x"></i>
+                                                    <p>Loading products...</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <nav aria-label="Products pagination">
+                                <ul class="pagination" id="products-pagination"></ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Orders Tab -->
+                    <div class="tab-pane fade" id="orders" role="tabpanel">
+                        <div class="admin-card">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h3><i class="fas fa-shopping-cart text-success me-2"></i>Orders Management</h3>
+                                <div>
+                                    <button class="btn btn-danger me-2" onclick="adminDashboard.clearAllOrders()">
+                                        <i class="fas fa-trash-alt me-2"></i>Clear All Orders
+                                    </button>
+                                    <select class="form-select d-inline-block w-auto me-2" id="order-status-filter">
+                                        <option value="">All Status</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="confirmed">Confirmed</option>
+                                        <option value="shipped">Shipped</option>
+                                        <option value="delivered">Delivered</option>
+                                        <option value="cancelled">Cancelled</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="search-box">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" class="search-input" id="order-search" placeholder="Search orders by customer name or order number...">
+                            </div>
+                            
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order #</th>
+                                            <th>Customer</th>
+                                            <th>Items</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                            <th>Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="orders-table-body">
+                                        <tr>
+                                            <td colspan="7" class="text-center">
+                                                <div class="loading-spinner">
+                                                    <i class="fas fa-spinner fa-spin fa-2x"></i>
+                                                    <p>Loading orders...</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <nav aria-label="Orders pagination">
+                                <ul class="pagination" id="orders-pagination"></ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <!-- Users Tab -->
+                    <div class="tab-pane fade" id="users" role="tabpanel">
+                        <div class="admin-card">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h3><i class="fas fa-users text-info me-2"></i>Users Management</h3>
+                                <div>
+                                    <button class="btn btn-danger me-2" onclick="adminDashboard.clearAllUsers()">
+                                        <i class="fas fa-trash-alt me-2"></i>Delete All Users
+                                    </button>
+                                    <button class="btn btn-outline-secondary me-2" onclick="adminDashboard.forceReloadUsers()">
+                                        <i class="fas fa-sync-alt me-2"></i>Reload
+                                    </button>
+                                    <select class="form-select d-inline-block w-auto me-2" id="user-role-filter">
+                                        <option value="">All Roles</option>
+                                        <option value="user">User</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="search-box">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" class="search-input" id="user-search" placeholder="Search users by name or email...">
+                            </div>
+                            
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Joined</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="users-table-body">
+                                        <tr>
+                                            <td colspan="5" class="text-center">
+                                                <div class="loading-spinner">
+                                                    <i class="fas fa-spinner fa-spin fa-2x"></i>
+                                                    <p>Loading users...</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <nav aria-label="Users pagination">
+                                <ul class="pagination" id="users-pagination"></ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Only Section -->
+            <div class="user-only">
+                <div class="admin-card">
+                    <div class="text-center">
+                        <i class="fas fa-lock fa-3x text-muted mb-3"></i>
+                        <h3>Access Restricted</h3>
+                        <p class="text-muted">
+                            You need admin privileges to access this dashboard. 
+                            Please contact an existing admin to grant you access.
+                        </p>
+                        <a href="login.html" class="btn btn-outline-primary">
+                            <i class="fas fa-sign-in-alt me-2"></i>
+                            Sign In
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="../scripts/script.js"></script>
+    
+    <!-- Admin Dashboard Script -->
+    <script src="../scripts/admin-dashboard.js"></script>
+</body>
+</html> 
